@@ -6,6 +6,7 @@
  */
 package conjuntitas.dinamico;
 import lineales.dinamicas.*;
+import sistema.Aeropuerto;
 
 public class AVL {
     private NodoAVL raiz;
@@ -62,7 +63,7 @@ public class AVL {
         boolean retorno = false;
         
         if(subRaiz != null){
-            if(!subRaiz.getElemento().equals(elemento)){
+            if(subRaiz.getElemento().compareTo(elemento) != 0){
                 if(subRaiz.getElemento().compareTo(elemento) > 0){
                     //nos movemos a la izquierda de la subRaiz
                     retorno = insertarAuxInsertarHijos(subRaiz, subRaiz.getIzquierdo(), 'I', elemento);
@@ -509,13 +510,13 @@ public class AVL {
     
     /***
      * evaluamos si un elemento esta en el arbol
-     * @param elemento buscado
+     * @param aeropuerto buscado
      * @return si esta true, sino false
      */
-    public boolean pertenece(Comparable elemento){
+    public boolean pertenece(Comparable aeropuerto){
         boolean retorno = false;
         if(this.raiz != null){
-            retorno = perteneceAux(this.raiz, elemento);
+            retorno = perteneceAux(this.raiz, aeropuerto);
         }
         return retorno;
     }
@@ -531,7 +532,7 @@ public class AVL {
         //si el nodo no es null
         if(subRaiz != null){
             //si el elemento es ta en esta nodo retorno true
-            if(subRaiz.getElemento().equals(elemento)){
+            if(subRaiz.getElemento().compareTo(elemento) == 0){
                 retorno = true;
             }else{
                 //sino busco si es menor a el nodo por HI
@@ -549,25 +550,25 @@ public class AVL {
     public Object recuperar(Comparable elemento) {
     	Object retorno = null;
     	if(this.raiz != null){
-            retorno = perteneceAux(this.raiz, elemento);
+            retorno = this.recuperarAux(this.raiz, elemento);
         }
     	return retorno;
     }
     
-    private Object recuperarAux(NodoAVL subRaiz, Comparable elemento){
+    private Object recuperarAux(NodoAVL subRaiz, Object elemento){
     	Object retorno = null;
         //si el nodo no es null
         if(subRaiz != null){
             //si el elemento es ta en esta nodo retorno true
-            if(subRaiz.getElemento().equals(elemento)){
-                retorno = subRaiz.getClass();
+            if(subRaiz.getElemento().compareTo(elemento) == 0){
+            	retorno = subRaiz.getElemento();
             }else{
                 //sino busco si es menor a el nodo por HI
                 if(subRaiz.getElemento().compareTo(elemento) > 0){
-                    retorno = perteneceAux(subRaiz.getIzquierdo(), elemento);
+                    retorno = recuperarAux(subRaiz.getIzquierdo(), elemento);
                 }else{
                     //sino busco por el ID
-                    retorno = perteneceAux(subRaiz.getDerecho(), elemento);
+                    retorno = recuperarAux(subRaiz.getDerecho(), elemento);
                 }
             }
         }

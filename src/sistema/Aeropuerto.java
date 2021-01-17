@@ -1,6 +1,6 @@
 package sistema;
 
-public class Aeropuerto {
+public class Aeropuerto implements Comparable{
 	private String nombreAeronautico;
 	private String ciudad;
 	private String telefono;
@@ -43,8 +43,10 @@ public class Aeropuerto {
 		Aeropuerto obj = (Aeropuerto) elem;
 		return this.nombreAeronautico.equals(obj.nombreAeronautico);
 	}
-	
-	public int compareTo(Aeropuerto areopuertoParam) {
+
+	@Override
+	public int compareTo(Object o) {
+		Aeropuerto areopuertoParam = (Aeropuerto) o;
 		return this.nombreAeronautico.compareTo(areopuertoParam.nombreAeronautico);
 	}
 }

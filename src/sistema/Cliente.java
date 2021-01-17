@@ -63,6 +63,13 @@ public class Cliente implements Comparable{
 	public String toString() {
 		return "(tipo: "+this.tipo+", "+this.numero+", "+this.nombre+")";
 	}
+	
+	public boolean equals(Comparable elem) {
+		Cliente obj = (Cliente) elem;
+		boolean retorno = (this.tipo.equals(obj.tipo) && this.numero == obj.numero);
+		System.out.println(retorno);
+		return retorno;
+	}
 
 	@Override
 	public int compareTo(Object elem) {
