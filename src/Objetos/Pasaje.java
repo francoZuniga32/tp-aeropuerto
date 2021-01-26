@@ -1,4 +1,4 @@
-package sistema;
+package Objetos;
 
 public class Pasaje {
 	private Vuelo vuelo;

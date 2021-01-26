@@ -1,4 +1,4 @@
-package sistema;
+package Objetos;
 import lineales.dinamicas.*;
 
 public class Vuelo implements Comparable{
@@ -16,7 +16,7 @@ public class Vuelo implements Comparable{
 		this.programados = new Lista();
 	}
 	
-	public Vuelo(String identificacionParam, int codigo, Aeropuerto aeropuerto, Aeropuerto aeropuertos, String horaSalidaParam, String horaLlegadaParam) {
+	public Vuelo(String identificacionParam, int codigo, Aeropuerto aeropuertoOrigen, Aeropuerto aeropuertoDestino, String horaSalidaParam, String horaLlegadaParam) {
 		this.identificacion = identificacionParam;
 		this.codigo = codigo;
 		this.aeropuertoOrigen = aeropuertoOrigen;
@@ -66,7 +66,7 @@ public class Vuelo implements Comparable{
 		this.horaDeLlegada = horaDeLlegada;
 	}
 	
-	public void setProgramado(Programados programado) {
+	public void setProgramado(Programado programado) {
 		this.programados.insertar(programado, this.programados.longitud() +1);
 	}
 	

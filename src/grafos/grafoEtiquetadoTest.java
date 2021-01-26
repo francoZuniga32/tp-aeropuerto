@@ -1,6 +1,8 @@
 package grafos;
 import java.util.HashMap;
 
+import lineales.dinamicas.Lista;
+
 public class grafoEtiquetadoTest {
 	public static void main(String[] args) {
 		GrafoEtiquetado G1 = new GrafoEtiquetado();
@@ -27,11 +29,16 @@ public class grafoEtiquetadoTest {
 		System.out.println("Insertamos arco entre F y F con la etiqueta '15': Espera False:\t"+(G1.insertarArco('F', 'F', 15)? "Ok": "False"));
 		System.out.println("Insertamos arco entre F y C con la etiqueta '15': Espera Ok:\t"+(G1.insertarArco('F', 'C', 15)? "Ok": "False"));
 		System.out.println(G1.toString());
-		System.out.println("Obtenemos la etiqueta del arco A A:\t"+G1.getEtiquetaArco('A', 'B').toString());
+		
 		System.out.println("Camino mas corto entre A y D: "+G1.caminoMasCorto('A', 'D').toString());
-		System.out.println("Camino mas largo entre A y D: "+G1.caminoMasLargo('A', 'D').toString());
+		System.out.println("Camino mas largo entre A y D: "+G1.caminoMasLargo('A', 'D').toString());;
 		System.out.println("Listar en profundidad: "+G1.listarProfundidad().toString());
 		System.out.println("Listar en anchura: "+G1.listarAnchura().toString());
 		System.out.println("clone: "+G1.clone().toString());
+		System.out.println("Lista de caminos: "+G1.caminos('A', 'E').toString());
+		System.out.println("Obtenemos la etiqueta del arco A A:\t");
+		System.out.println(G1.getEtiquetaArco('A', 'A'));
+		Lista lista = new Lista();
+		System.out.println(lista.longitud());
 	}
 }

@@ -1,4 +1,4 @@
-package sistema;
+package Objetos;
 
 public class Aeropuerto implements Comparable{
 	private String nombreAeronautico;

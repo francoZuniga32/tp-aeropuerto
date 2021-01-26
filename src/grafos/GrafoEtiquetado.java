@@ -71,7 +71,7 @@ public class GrafoEtiquetado {
     		if(nodo.getElemento().equals(elemB)) verticeB = nodo;
     		nodo = nodo.getSigVertice();
     	}
-    	System.out.println(verticeA+" "+verticeB);
+    	
     	if(verticeA != null && verticeB != null) {
     		this.insertarAdyacente(verticeA, verticeB, etiqueta);
     		this.insertarAdyacente(verticeB, verticeA, etiqueta);
@@ -107,9 +107,15 @@ public class GrafoEtiquetado {
     	while(nodo != null) {
     		if(nodo.getElemento().equals(elemA)) verticeA = nodo;
     		if(nodo.getElemento().equals(elemB)) verticeB = nodo;
+    		nodo = nodo.getSigVertice();
     	}
     	if(verticeA != null && verticeB != null) {
-    		retorno = this.getEtiquetaAdyacenteAux(verticeA, verticeB);
+        	AdyacenteEtiquetado aux = verticeA.getAdyacente();
+        	while(aux != null && retorno == null) {
+        		if(aux.getVertice().equals(verticeB)) retorno = aux.getEtiqueta();
+        		aux = aux.getSiguienteAdy();
+        	}
+        	return retorno;
     	}
     	
     	return retorno;
@@ -222,6 +228,71 @@ public class GrafoEtiquetado {
     	return camino;
     }
     
+    public Lista caminos(Object elemA, Object elemB) {
+    	Lista camino = new Lista();
+    	HashMap<String, Object> visitados = new HashMap<String, Object>();
+    	VerticeEtiquetado nodo = this.inicio;
+    	VerticeEtiquetado verticeA = null;
+    	VerticeEtiquetado verticeB = null;
+    	while(nodo != null) {
+    		if(nodo.getElemento().equals(elemA)) verticeA = nodo;
+    		if(nodo.getElemento().equals(elemB)) verticeB = nodo;
+    		nodo = nodo.getSigVertice();
+    	}
+    	
+    	if(verticeA != null && verticeB != null) {
+    		camino = this.caminosAux(verticeA, verticeB, visitados);
+    	}
+    	return camino;
+    }
+    
+    private Lista caminosAux(VerticeEtiquetado nodo, VerticeEtiquetado destino, HashMap<String, Object> visitados) {
+    	Lista retorno = new Lista();
+    	if(nodo != null) {
+    		visitados.put(nodo.getElemento().toString(), nodo);
+    		if(nodo.equals(destino)) {
+    			Lista lista = new Lista();
+    			lista.insertar(nodo.getElemento(), 1);
+    			retorno.insertar(lista, 1);
+    		}else {
+    			AdyacenteEtiquetado adyacente = nodo.getAdyacente();
+    			while(adyacente != null) {
+    				if(visitados.get(adyacente.getVertice().getElemento().toString()) == null) {
+    					Lista listaRetorno = caminosAux(adyacente.getVertice(), destino, visitados);
+    					retorno = this.concatenar(listaRetorno, retorno);
+    				}
+    				adyacente = adyacente.getSiguienteAdy();
+    			}
+    			int i = 1;
+    			while(i <= retorno.longitud()) {
+    				Lista lista = (Lista) retorno.recuperar(i);
+    				retorno.eliminar(i);
+    				lista.insertar(nodo.getElemento(), 1);
+    				retorno.insertar(lista, i);
+    				i++;
+    			}
+    		}
+    	}
+    	visitados.remove(nodo.getElemento().toString());
+    	return retorno;
+    }
+    
+    private Lista concatenar(Lista l1, Lista l2){
+        Lista retorno = new Lista();
+        int i = 1;
+        
+        while(i <= l1.longitud()+l2.longitud()){
+            if(i <= l1.longitud()){
+                retorno.insertar(l1.recuperar(i), i);
+            }else{
+                retorno.insertar(l2.recuperar(i-l1.longitud()), i-l1.longitud());
+            }
+            i++;
+        }
+        
+        return retorno;
+    }
+    
     public Lista listarProfundidad() {
     	Lista listados = new Lista();
     	HashMap<String, Object> visitados = new HashMap<String, Object>();
@@ -332,25 +403,27 @@ public class GrafoEtiquetado {
     
     private Lista caminoMasCortoAux(VerticeEtiquetado inicio, VerticeEtiquetado destino, HashMap<String, Object> visitados) {
     	Lista retorno = new Lista();
-    	visitados.put(inicio.getElemento().toString(), inicio);
     	if(inicio != null) {
+    		visitados.put(inicio.getElemento().toString(), inicio);
     		if(inicio.equals(destino)) retorno.insertar(inicio.getElemento(), 1);
     		else {
     			AdyacenteEtiquetado adyacente = inicio.getAdyacente();
     			Lista listaAuxiliar = new Lista();
     			while(adyacente != null) {
-    				if(visitados.get(adyacente.getVertice().getElemento().toString()) == null && retorno.longitud() == 0) {
-    					retorno = this.caminoMasCortoAux(adyacente.getVertice(), destino, visitados);
-    				}else if(visitados.get(adyacente.getVertice().getElemento().toString()) == null) {
-    					listaAuxiliar = this.caminoMasCortoAux(adyacente.getVertice(), destino, visitados);
-    					if(listaAuxiliar.longitud() <= retorno.longitud()) retorno = listaAuxiliar;
+    				if(visitados.get(adyacente.getVertice().getElemento().toString()) == null) {
+    					if(retorno.esVacia()) {
+    						retorno = this.caminoMasCortoAux(adyacente.getVertice(), destino, visitados);
+        				}else{
+        					listaAuxiliar = this.caminoMasCortoAux(adyacente.getVertice(), destino, visitados);
+        					if(listaAuxiliar.longitud() <= retorno.longitud() && listaAuxiliar.longitud() > 0) retorno = listaAuxiliar;
+        				}	
     				}
     				adyacente = adyacente.getSiguienteAdy();
     			}
     			if(retorno.longitud() > 0) retorno.insertar(inicio.getElemento(), 1);
     		}
+    		visitados.remove(inicio.getElemento().toString());
     	}
-    	visitados.remove(inicio.getElemento().toString());
     	return retorno;
     }
     
@@ -363,11 +436,13 @@ public class GrafoEtiquetado {
     			AdyacenteEtiquetado adyacente = inicio.getAdyacente();
     			Lista listaAuxiliar = new Lista();
     			while(adyacente != null) {
-    				if(visitados.get(adyacente.getVertice().getElemento().toString()) == null && retorno.longitud() == 0) {
-    					retorno = this.caminoMasLargoAux(adyacente.getVertice(), destino, visitados);
-    				}else if(visitados.get(adyacente.getVertice().getElemento().toString()) == null) {
-    					listaAuxiliar = this.caminoMasLargoAux(adyacente.getVertice(), destino, visitados);
-    					if(listaAuxiliar.longitud() >= retorno.longitud()) retorno = listaAuxiliar;
+    				if(visitados.get(adyacente.getVertice().getElemento().toString()) == null) {
+    					if(retorno.esVacia()) {
+        					retorno = this.caminoMasLargoAux(adyacente.getVertice(), destino, visitados);
+        				}else{
+        					listaAuxiliar = this.caminoMasLargoAux(adyacente.getVertice(), destino, visitados);
+        					if(listaAuxiliar.longitud() >= retorno.longitud() && listaAuxiliar.longitud() > 0) retorno = listaAuxiliar;
+        				}	
     				}
     				adyacente = adyacente.getSiguienteAdy();
     			}
@@ -394,20 +469,6 @@ public class GrafoEtiquetado {
     				aux = aux.getSiguienteAdy();
     			}
     		}
-    	}
-    	return retorno;
-    }
-    
-    private Object getEtiquetaAdyacenteAux(VerticeEtiquetado nodo, VerticeEtiquetado adyacente) {
-    	Object retorno = null;
-    	boolean control = true;
-    	AdyacenteEtiquetado aux = nodo.getAdyacente();
-    	while(aux != null && control) {
-    		if(aux.getVertice().equals(adyacente)) {
-    			retorno = aux.getEtiqueta();
-    			control = false;
-    		}
-    		aux = aux.getSiguienteAdy();
     	}
     	return retorno;
     }

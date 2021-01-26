@@ -178,6 +178,26 @@ public class Lista{
         return invertido;
     }
     
+    public void join(Lista listaB) {
+    	Nodo indice1 = this.cabecera;
+    	Nodo indice2 = listaB.cabecera;
+    	if(indice1 != null) {
+        	while(indice1.getEnlace() != null) {
+        		indice1 = indice1.getEnlace();
+        	}
+    	}else if(indice2 != null){
+    		this.cabecera = new Nodo(indice2.getElemento(), null);
+    		indice1 = this.cabecera;
+    		indice2 = indice2.getEnlace();
+    	}
+    	
+    	while(indice2 != null) {
+    		indice1.setEnlace(new Nodo(indice2.getElemento(), null));
+    		indice1 = indice1.getEnlace();
+    		indice2 = indice2.getEnlace();
+    	}
+    }
+    
     /**
      * es el paso recursivo para poder realizar la lista invertida
      * @param punteroOriginal es el puntero de los nodos de la lisa original

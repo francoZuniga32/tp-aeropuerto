@@ -1,3 +1,2 @@
 nacional;41321297;franco;zuniga;31/08/1998;Barrio Z1, MZ 7 Cs 6, Neuquen, Argentina;2994139643;
-nacional;41321297;franco;zuniga;31/08/1998;Barrio Z1, MZ 7 Cs 6, Neuquen, Argentina;2994139643;
-nacional;41321295;franco;zuniga;31/08/1998;Barrio Z1, MZ 7 Cs 6, Neuquen, Argentina;2994139643;
+nacional;42532589;mariana;zuniga;31/03/1985;Barrio Z1, MZ 8 Cs 6, Neuquen, Argentina;2994216365;

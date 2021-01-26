@@ -1,2 +1,8 @@
 NQN;Neuquen Capital, Neuquen, Argentina;2994136545;
 RN;San Carlos de Bariloche, Rio Negro, Argentina;2994136542;
+MDZ;Mendoza;2954681235;
+CRD;Comodoro Rivadavia;2963212658;
+COR;Cordoba Capital;298741365;
+SAL;Salta;2874621354;
+JUJ;Jujui;298451354;
+ROS;Rosario;29775331;

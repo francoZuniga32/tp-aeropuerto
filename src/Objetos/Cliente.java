@@ -1,4 +1,4 @@
-package sistema;
+package Objetos;
 
 public class Cliente implements Comparable{
 	private String tipo;
@@ -40,7 +40,7 @@ public class Cliente implements Comparable{
 		this.telefono = telefonoParam;
 	}
 	
-	public void serDomicilio(String domicilioParam) {
+	public void setDomicilio(String domicilioParam) {
 		this.domicilio = domicilioParam;
 	}
 	
@@ -58,6 +58,10 @@ public class Cliente implements Comparable{
 	
 	public String getTelefono() {
 		return this.telefono;
+	}
+	
+	public String getDomicilio() {
+		return this.domicilio;
 	}
 	
 	public String toString() {

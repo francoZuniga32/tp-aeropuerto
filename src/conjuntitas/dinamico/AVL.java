@@ -5,8 +5,8 @@
  * tenga una complegidad O(log(n))
  */
 package conjuntitas.dinamico;
+import Objetos.Aeropuerto;
 import lineales.dinamicas.*;
-import sistema.Aeropuerto;
 
 public class AVL {
     private NodoAVL raiz;
@@ -560,6 +560,7 @@ public class AVL {
         //si el nodo no es null
         if(subRaiz != null){
             //si el elemento es ta en esta nodo retorno true
+        	System.out.println(subRaiz.getElemento().compareTo(elemento) == 0);
             if(subRaiz.getElemento().compareTo(elemento) == 0){
             	retorno = subRaiz.getElemento();
             }else{
