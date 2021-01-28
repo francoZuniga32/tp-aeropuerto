@@ -201,7 +201,7 @@ public class AVL {
             }
         }
         //balancemos
-        if(retorno){
+        if(retorno && subRaiz != null){
             subRaiz.recalcularAltura();
             balancear(padre, subRaiz, hijo);
         }
@@ -560,7 +560,6 @@ public class AVL {
         //si el nodo no es null
         if(subRaiz != null){
             //si el elemento es ta en esta nodo retorno true
-        	System.out.println(subRaiz.getElemento().compareTo(elemento) == 0);
             if(subRaiz.getElemento().compareTo(elemento) == 0){
             	retorno = subRaiz.getElemento();
             }else{

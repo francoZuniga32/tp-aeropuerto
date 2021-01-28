@@ -106,7 +106,12 @@ static TecladoIn teclado = new TecladoIn();
         while (sc.hasNextLine()) {
             //Los ";" separan los datos de cada linea y el primer dato determina que es lo que se va a cargar
             datos = sc.nextLine().split(";");
-            System.out.println("Cargamos un Aeropuerto Espera OK"+(aeropuerto.insertarVertice(new Aeropuerto(datos[0], datos[1], datos[2]))? "Ok": "False"));
+            if(datos.length == 3) {
+            	String nombreAeronautico = datos[0];
+            	String nombre = datos[1];
+            	String telefono = datos[2];
+            	aeropuerto.insertarVertice(new Aeropuerto(nombreAeronautico, nombre, telefono));	
+            }
         }
 	}
 	
@@ -116,7 +121,12 @@ static TecladoIn teclado = new TecladoIn();
         while (sc.hasNextLine()) {
             //Los ";" separan los datos de cada linea y el primer dato determina que es lo que se va a cargar
             datos = sc.nextLine().split(";");
-            System.out.println("Insertamos un arco espera Ok"+(aeropuerto.insertarArco(new Aeropuerto(datos[0]), new Aeropuerto(datos[1]), datos[2])? "OK": "False"));
+            if(datos.length == 3) {
+            	Aeropuerto aeropuertoOrigen = new Aeropuerto(datos[0]);
+            	Aeropuerto aeropuertoDestino = new Aeropuerto(datos[1]);
+            	double tiempoViaje = Double.parseDouble(datos[2]);
+            	aeropuerto.insertarArco(aeropuertoOrigen, aeropuertoDestino, tiempoViaje);
+            }
         }
 	}
 	
@@ -126,8 +136,7 @@ static TecladoIn teclado = new TecladoIn();
         while (sc.hasNextLine()) {
             //Los ";" separan los datos de cada linea y el primer dato determina que es lo que se va a cargar
             datos = sc.nextLine().split(";");
-            System.out.println(datos.length);
-            if(datos.length <= 7) {
+            if(datos.length == 7) {
             	String tipo = datos[0];
                 int numero = Integer.parseInt(datos[1]);
                 String nombre = datos[2];
@@ -136,7 +145,7 @@ static TecladoIn teclado = new TecladoIn();
                 String domicilio = datos[5];
                 String telefono = datos[6];
                 Cliente cliente = new Cliente(tipo, numero);
-                System.out.println("Insertamos un cliente espera Ok"+(clientes.insertar(cliente)? "OK": "False"));
+                clientes.insertar(cliente);
                 cliente.setNombre(nombre);
                 cliente.setApellido(apellido);
                 cliente.setFechaNacimiento(fechaNacimiento);
@@ -160,8 +169,7 @@ static TecladoIn teclado = new TecladoIn();
                 Aeropuerto destino = (Aeropuerto) obtenerAeropuertosAux(aeropuertos, datos[3]);
                 String fechaSalida = datos[4];
                 String fechaLlegada = datos[5];
-                System.out.println(origen);
-    	        System.out.println("Insertamos un cliente espera Ok"+(vuelos.insertar(new Vuelo(siglas, numero, origen, destino, fechaSalida, fechaSalida)) ? "OK": "False"));
+                vuelos.insertar(new Vuelo(siglas, numero, origen, destino, fechaSalida, fechaSalida));
             }
         }
 	}
@@ -181,27 +189,21 @@ static TecladoIn teclado = new TecladoIn();
             	int asientos = Integer.parseInt(datos[5]);
             	String estado = datos[6];
             	
-            	Object comprador = clientes.recuperar(new Cliente(tipoDocumento, numeroDocumento));
-            	System.out.println(comprador);
+            	Object comprador = obtenerClienteAux(clientes, tipoDocumento, numeroDocumento);
             	if(comprador != null) {
                 	Cliente clienteRecuperado = (Cliente) comprador;
                 	Lista pasajesCliente = (Lista) pasajes.get(comprador);
                     if(pasajesCliente != null) {
                     	//en caso de que ya tenga pasajes
-                    	System.out.println(vuelos);
                     	Vuelo vueloRecuperado = (Vuelo) vuelos.recuperar(new Vuelo(siglasAerolineas, numeroVuelo));
                     	Lista programados = vueloRecuperado.getProgramados();
-                    	if(programados.esVacia()) {
-                    		pasajesCliente.insertar(new Pasaje(vueloRecuperado, datos[4], Integer.parseInt(datos[5]), datos[6]), pasajesCliente.longitud() + 1);		
-                    	}else {
-                    		
-                    	}
-                    	pasajesCliente.insertar(new Pasaje(vueloRecuperado, datos[4], Integer.parseInt(datos[5]), datos[6]), pasajesCliente.longitud() + 1);
+                    	pasajesCliente.insertar(new Pasaje(vueloRecuperado, fecha, asientos, estado), pasajesCliente.longitud() + 1);
+                    	
                     }else {
                     	//en caso de no tener pasajes
                     	pasajesCliente = new Lista();
-                    	Vuelo vueloRecuperado = (Vuelo) vuelos.recuperar(new Vuelo(datos[2], Integer.parseInt(datos[3])));
-                    	pasajesCliente.insertar(new Pasaje(vueloRecuperado, datos[4], Integer.parseInt(datos[5]), datos[6]), pasajesCliente.longitud() + 1);
+                    	Vuelo vueloRecuperado = (Vuelo) vuelos.recuperar(new Vuelo(siglasAerolineas, numeroVuelo));
+                    	pasajesCliente.insertar(new Pasaje(vueloRecuperado, fecha, asientos, estado), pasajesCliente.longitud() + 1);
                     	pasajes.put(clienteRecuperado, pasajesCliente);
                     }
                 }
@@ -250,6 +252,12 @@ static TecladoIn teclado = new TecladoIn();
 		return retorno;
 	}
 	
+	public static double leerDouble() {
+		double retorno = TecladoIn.readLineDouble();
+		escribir(retorno);
+		return retorno;
+	}
+	
 	//ABM aeropuetos
 	
 	public static void ABMaeropuerto(GrafoEtiquetado aeropuertos) {
@@ -266,8 +274,17 @@ static TecladoIn teclado = new TecladoIn();
 				case 3:
 					modificacionAeropuerto(aeropuertos);
 					break;
+				case 4:
+					ABMrutas(aeropuertos);
+					break;
+				case 5:
+					escribir("finalizando ABM aeropuertos");
+					break;
+				default:
+					escribir("La opcion ingresada no es correcta");
+				break;
 			}
-		}while(opcion < 4);
+		}while(opcion != 5);
 	}
 	
 	public static int ABMaeropuertoMenu() {
@@ -276,7 +293,8 @@ static TecladoIn teclado = new TecladoIn();
 				+ "1. Alta aeropuerto\n"
 				+ "2. Baja aeropuerto\n"
 				+ "3. Modificacion aeropuerto\n"
-				+ "4. salir");
+				+ "4. ABM Rutas\n"
+				+ "5. salir");
 		return leerInt();
 	}
 	
@@ -313,6 +331,59 @@ static TecladoIn teclado = new TecladoIn();
 		}
 	}
 	
+	//ABM ruras
+	
+	public static void ABMrutas(GrafoEtiquetado aeropuertos) {
+		int opcion = 0;
+		do {
+			opcion = ABMrutasMenu();
+			switch (opcion) {
+			case 1:
+				altaRuta(aeropuertos);
+				break;
+			case 2:
+				bajaRuta(aeropuertos);
+				break;
+			case 3:
+				escribir("Finalizado ABM rutas");
+				break;
+			default:
+				escribir("La opcion ingresada no es correcta");
+				break;
+			}
+		}while(opcion != 3);
+	}
+	
+	public static int ABMrutasMenu() {
+		int opcion = 0;
+		escribir("-- Seleccione una de las opciones : --\n"
+				+ "1. Alta Ruta\n"
+				+ "2. Baja Ruta\n"
+				+ "3. salir");
+		return leerInt();
+	}
+	
+	public static void altaRuta(GrafoEtiquetado aeropuertos) {
+		escribir("ingrese el aeropuerto de origen");
+		Aeropuerto aeropuertoOrigen = obtenerAeropuerto(aeropuertos);
+		escribir("ingrese el eropuerto de destino");
+		Aeropuerto aeropuertoDestino = obtenerAeropuerto(aeropuertos);
+		escribir("Ingrese el tiempo de viaje entre aeropuertos (hs)");
+		double tiempo = leerDouble();
+		if(aeropuertos.insertarArco(aeropuertoOrigen, aeropuertoDestino, tiempo)) escribir("La ruta fue creada con exito");
+		else escribir("ups ha pasado algo creado la ruta");
+	}
+	
+	public static void bajaRuta(GrafoEtiquetado aeropuertos) {
+		escribir("ingrese el aeropuerto de origen");
+		Aeropuerto aeropuertoOrigen = obtenerAeropuerto(aeropuertos);
+		escribir("ingrese el eropuerto de destino");
+		Aeropuerto aeropuertoDestino = obtenerAeropuerto(aeropuertos);
+		if(aeropuertos.eliminarArco(aeropuertoOrigen, aeropuertoDestino)) escribir("La ruta fue eliminada con exito");
+		else escribir("ups, la ruta ingresada no existia o ha pasado otra cosa :( ");
+	}
+	
+	
 	//ABM cliete
 	
 	public static int ABMclienteMenu() {
@@ -339,12 +410,18 @@ static TecladoIn teclado = new TecladoIn();
 			case 3:
 				modificarCliente(clientes);
 				break;
+			case 4:
+				escribir("finalizando ABM clientes");
+				break;
+			default:
+				escribir("La opcion ingresada no es correcta");
+			break;
 			}
-		}while(opcion > 3);
+		}while(opcion != 4);
 	}
 	
 	public static void altaCliente(AVL clientes) {
-		Cliente nuevoCliente = obtenerCliente(clientes);
+		Cliente nuevoCliente = obtenerNuevoCliente(clientes);
 		if(clientes.insertar(nuevoCliente)) {
 			escribir("Ingresar nombre: ");
 			String nombreParam = leerString();
@@ -401,8 +478,14 @@ static TecladoIn teclado = new TecladoIn();
 			case 3:
 				modificacionesVuelos(vuelos);
 				break;
+			case 4:
+				escribir("finalizando ABM vuelos");
+				break;
+			default:
+				escribir("La opcion ingresa no es correcta");
+				break;
 			}			
-		}while(opcion < 4);
+		}while(opcion != 4);
 	}
 	
 	public static int ABMvuelosMenu() {
@@ -482,11 +565,14 @@ static TecladoIn teclado = new TecladoIn();
 			case 2:
 				bajaProgramado(programados);
 				break;
+			case 3:
+				escribir("Finalizando AB programado");
+				break;
 			default:
 				escribir("ingrese una opcion correcta!!");
 				break;
 			}
-		}while(opcion > 3);
+		}while(opcion != 3);
 	}
 	
 	public static int ABMmenuProgramados() {
@@ -535,8 +621,14 @@ static TecladoIn teclado = new TecladoIn();
 			case 3:
 				modificarPasajes(clientes, pasajesLista);
 				break;
+			case 4:
+				escribir("finalizando ABM pasajes");
+				break;
+			default:
+				escribir("La opcion ingresa no es correcta");
+				break;
 			}
-		}while(opcion > 3 && opcion < 1);
+		}while(opcion != 4);
 	}
 	
 	public static int ABMpasajesMenu() {
@@ -598,10 +690,14 @@ static TecladoIn teclado = new TecladoIn();
 			case 2:
 				ciudadesVisitadas(clientes, pasajes);
 				break;
+			case 3:
+				escribir("Finalizando operaciones cliente ");
+			break;
 			default:
+				escribir("La opcion ingresa no es correcta");
 				break;
 			}
-		}while(operacion < 1 && operacion > 3);
+		}while(operacion != 3);
 	}
 	
 	public static int oprecionesClienteMenu() {
@@ -651,10 +747,14 @@ static TecladoIn teclado = new TecladoIn();
 			case 2:
 				rangoVuelos(vuelos);
 				break;
+			case 3:
+				escribir("Finalizando operaciones vuelos");
+			break;
 			default:
+				escribir("La operacion ingresa no es correcta");
 				break;
 			}
-		}while(operacion < 1 && operacion > 3);
+		}while(operacion != 3);
 	}
 	
 	public static int operacionesVuelosMenu() {
@@ -719,8 +819,10 @@ static TecladoIn teclado = new TecladoIn();
 				menorTiempoConEscala(aeropuertos);
 				break;
 			case 5:
+				escribir("Finalizando consulta tiempos de vieje");
 				break;
 			default:
+				escribir("La operacion ingresada no es correcta");
 				break;
 			}
 		}while(opcion != 6);
@@ -875,7 +977,7 @@ static TecladoIn teclado = new TecladoIn();
 		}
 	}
 	
-	//obtener
+	//obtener 
 	
 	public static Aeropuerto obtenerAeropuerto(GrafoEtiquetado aeropuertos) {
 		Aeropuerto retorno = null;
@@ -918,6 +1020,19 @@ static TecladoIn teclado = new TecladoIn();
 		return clientes.recuperar(new Cliente(tipo, numero));
 	}
 	
+	public static Cliente obtenerNuevoCliente(AVL clientes) {
+		Cliente retorno = null;
+		do {
+			escribir("Ingrese el tipo de DNI:");
+			String tipo = leerString();
+			escribir("Ingrese el numero de DNI:");
+			int numero = leerInt();
+			retorno = new Cliente(tipo, numero);
+		}while(clientes.recuperar(retorno) != null);
+		
+		return retorno;
+	}
+	
 	public static Vuelo obtenerVuelo(AVL vuelos) {
 		Vuelo retorno = null;
 		do {
@@ -932,6 +1047,18 @@ static TecladoIn teclado = new TecladoIn();
 	
 	public static Object obtenerVueloAux(AVL vuelos, String siglas, int numero) {
 		return vuelos.recuperar(new Vuelo(siglas, numero));
+	}
+	
+	public static Vuelo obtenerNuevoVuelo(AVL vuelos) {
+		Vuelo retorno = null;
+		do {
+			escribir("Ingresar las siglas de la Compania Aeronautica:");
+			String siglas = leerString();
+			escribir("Ingresar el numero de vuelo:");
+			int numero = leerInt();
+			retorno = (Vuelo) obtenerVueloAux(vuelos, siglas, numero);
+		}while(retorno != null);
+		return retorno;
 	}
 	
 	public static Programado obtenerProgramado(Lista programados) {
