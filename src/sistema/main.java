@@ -100,9 +100,10 @@ static TecladoIn teclado = new TecladoIn();
 		return opcion;
 	}
 	
-	public static void cargarAeropuerto(GrafoEtiquetado aeropuerto) throws FileNotFoundException {
+	public static boolean cargarAeropuerto(GrafoEtiquetado aeropuerto) throws FileNotFoundException {
 		Scanner sc = cargarArchivo("./aeropuertos.txt");
         String[] datos = new String[10];
+        boolean retorno = true;
         while (sc.hasNextLine()) {
             //Los ";" separan los datos de cada linea y el primer dato determina que es lo que se va a cargar
             datos = sc.nextLine().split(";");
@@ -111,13 +112,17 @@ static TecladoIn teclado = new TecladoIn();
             	String nombre = datos[1];
             	String telefono = datos[2];
             	aeropuerto.insertarVertice(new Aeropuerto(nombreAeronautico, nombre, telefono));	
+            }else {
+            	retorno = false;
             }
         }
+        return retorno;
 	}
 	
-	public static void cargarRutas(GrafoEtiquetado aeropuerto) throws FileNotFoundException {
+	public static boolean cargarRutas(GrafoEtiquetado aeropuerto) throws FileNotFoundException {
 		Scanner sc = cargarArchivo("./rutas.txt");
         String[] datos = new String[10];
+        boolean retorno = true;
         while (sc.hasNextLine()) {
             //Los ";" separan los datos de cada linea y el primer dato determina que es lo que se va a cargar
             datos = sc.nextLine().split(";");
@@ -126,13 +131,17 @@ static TecladoIn teclado = new TecladoIn();
             	Aeropuerto aeropuertoDestino = new Aeropuerto(datos[1]);
             	double tiempoViaje = Double.parseDouble(datos[2]);
             	aeropuerto.insertarArco(aeropuertoOrigen, aeropuertoDestino, tiempoViaje);
+            }else {
+            	retorno = false;
             }
         }
+        return retorno;
 	}
 	
-	public static void cargarClientes(AVL clientes) throws FileNotFoundException {
+	public static boolean cargarClientes(AVL clientes) throws FileNotFoundException {
 		Scanner sc = cargarArchivo("./clientes.txt");
         String[] datos = new String[10];
+        boolean retorno = true;
         while (sc.hasNextLine()) {
             //Los ";" separan los datos de cada linea y el primer dato determina que es lo que se va a cargar
             datos = sc.nextLine().split(";");
@@ -151,14 +160,17 @@ static TecladoIn teclado = new TecladoIn();
                 cliente.setFechaNacimiento(fechaNacimiento);
                 cliente.setDomicilio(domicilio);
                 cliente.setTelefono(telefono);
+            }else {
+            	retorno = false;
             }
         }
+        return retorno;
 	}
 	
-	public static void cargarVuelos(AVL vuelos, GrafoEtiquetado aeropuertos) throws FileNotFoundException {
-		
+	public static boolean cargarVuelos(AVL vuelos, GrafoEtiquetado aeropuertos) throws FileNotFoundException {
 		Scanner sc = cargarArchivo("./vuelos.txt");
         String[] datos;
+        boolean retorno = true;
         while (sc.hasNextLine()) {
             //Los ";" separan los datos de cada linea y el primer dato determina que es lo que se va a cargar
             datos = sc.nextLine().split(";");
@@ -170,13 +182,17 @@ static TecladoIn teclado = new TecladoIn();
                 String fechaSalida = datos[4];
                 String fechaLlegada = datos[5];
                 vuelos.insertar(new Vuelo(siglas, numero, origen, destino, fechaSalida, fechaSalida));
+            }else {
+            	retorno = false;
             }
         }
+        return retorno;
 	}
 	
-	public static void cargarPasajes(AVL clientes, AVL vuelos, HashMap<Cliente, Lista> pasajes) throws FileNotFoundException {
+	public static boolean cargarPasajes(AVL clientes, AVL vuelos, HashMap<Cliente, Lista> pasajes) throws FileNotFoundException {
 		Scanner sc = cargarArchivo("./pasajes.txt");
 		String[] datos;
+		boolean retorno = true;
 		while (sc.hasNextLine()) {
             //Los ";" separan los datos de cada linea y el primer dato determina que es lo que se va a cargar
             datos = sc.nextLine().split(";");
@@ -207,8 +223,11 @@ static TecladoIn teclado = new TecladoIn();
                     	pasajes.put(clienteRecuperado, pasajesCliente);
                     }
                 }
+            }else {
+            	retorno = false;
             }
         }
+		return retorno;
 	}
 	
 	public static Scanner cargarArchivo(String archivo) throws FileNotFoundException {
@@ -316,7 +335,9 @@ static TecladoIn teclado = new TecladoIn();
 	public static void bajasAeropuerto(GrafoEtiquetado aeropuertos) {
 		Aeropuerto aeropuertoBuscado = obtenerAeropuerto(aeropuertos);
 		if(aeropuertos.eliminarVertice(aeropuertoBuscado))escribir("Se ha eliminado exitosamente");
-		else escribir("El aeropuerto ingresado no existe");
+		else {
+			escribir("El aeropuerto ingresado no existe");
+		}
 	}
 	
 	public static void modificacionAeropuerto(GrafoEtiquetado aeropuertos) {
@@ -503,7 +524,7 @@ static TecladoIn teclado = new TecladoIn();
 	}
 	
 	public static void altasVuelos(AVL vuelos, GrafoEtiquetado aeropuertos) {
-		Vuelo nuevoVuelo = obtenerVuelo(vuelos);
+		Vuelo nuevoVuelo = obtenerNuevoVuelo(vuelos);
 		if(vuelos.insertar(nuevoVuelo)) {
 			escribir("ingrese el aeropuerto de origen: ");
 			nuevoVuelo.setAeropuertoOrigen(obtenerAeropuerto(aeropuertos));
@@ -722,15 +743,25 @@ static TecladoIn teclado = new TecladoIn();
 	public static void ciudadesVisitadas(AVL clientes,HashMap<Cliente, Lista> pasajes) {
 		Cliente cliente = (Cliente) obtenerCliente(clientes);
 		Lista pasajesCliente = pasajes.get(cliente);
+		Lista ciudades = new Lista();
 		int i = 1;
 		System.out.println(pasajesCliente.longitud());
 		escribir("viejes");
 		while(i <= pasajesCliente.longitud()) {
 			Pasaje pasaje = (Pasaje) pasajesCliente.recuperar(i);
 			Vuelo vuelo = pasaje.getVuelo();
-			escribir("| "+vuelo.getAeropuertoOrigen().toString()+" -> "+vuelo.getAeropuertoDestino().toString());
+			Aeropuerto ciudadeOrigen = vuelo.getAeropuertoOrigen();
+			Aeropuerto ciudadeDestino = vuelo.getAeropuertoDestino();
+			if(ciudades.localizar(ciudadeOrigen.getCiudad()) == -1) ciudades.insertar(ciudadeOrigen.getCiudad(), 1);
+			if(ciudades.localizar(ciudadeDestino.getCiudad()) == -1) ciudades.insertar(ciudadeDestino.getCiudad(), 1);
 			i++;
 		}
+		i = 1;
+		while(i <= ciudades.longitud()) {
+			escribir("|"+ciudades.recuperar(i)+"|");
+			i++;
+		}
+		
 	}
 	
 	//operaciones vuelos
@@ -825,7 +856,7 @@ static TecladoIn teclado = new TecladoIn();
 				escribir("La operacion ingresada no es correcta");
 				break;
 			}
-		}while(opcion != 6);
+		}while(opcion != 5);
 	}
 	
 	public static int consultaTiemposDeViajeMenu() {
@@ -856,34 +887,43 @@ static TecladoIn teclado = new TecladoIn();
 		Aeropuerto aeropuertoA = obtenerAeropuerto(aeropuertos);
 		Aeropuerto aeropuertoB = obtenerAeropuerto(aeropuertos);
 		Lista caminos = aeropuertos.caminos(aeropuertoA, aeropuertoB);
-		if(!caminos.esVacia()) {
-			HashMap<Lista, Integer> distancia = new HashMap<Lista, Integer>();
-			int i = 1;
-			int minimo = 0;
-			while(i <= caminos.longitud()) {
-				Lista camino = (Lista) caminos.recuperar(i);
-				if(i==1) {
-					minimo = tiempoCamino(camino, aeropuertos);
-				}else {
-					int minimoAtual = tiempoCamino(camino, aeropuertos);
-					if(minimo > minimoAtual) minimo = minimoAtual;
-				}
-				i++;
-			}
-		}
+		Lista caminoMinimo = minimoCamino(caminos, aeropuertos);
+		escribir("El viaje y sus escalas mas rapidas para la ruta ingresada es:"+caminoMinimo.toString());
 	}
 	
-	public static int tiempoCamino(Lista camino, GrafoEtiquetado aeropuertos) {
-		int retorno = 0;
-		int i = 0;
-		int tiempo = 0;
+	public static double tiempoCamino(Lista camino, GrafoEtiquetado aeropuertos) {
+		int i = 1;
+		double retorno = 0;
 		if(camino.longitud() > 1) {
 			while(i < camino.longitud()) {
-				tiempo += (int) aeropuertos.getEtiquetaArco(camino.recuperar(i), camino.recuperar(i));
+				retorno += (double) aeropuertos.getEtiquetaArco(camino.recuperar(i), camino.recuperar(i+1));
 				i++;
 			}
 		}
 		return retorno;
+	}
+	
+	public static Lista minimoCamino(Lista caminos, GrafoEtiquetado aeropuertos) {
+		Lista caminoMinimo = new Lista();
+		if(!caminos.esVacia()) {
+			int i = 1;
+			double minimo = 0;
+			while(i <= caminos.longitud()) {
+				Lista camino = (Lista) caminos.recuperar(i);
+				if(i==1) {
+					minimo = tiempoCamino(camino, aeropuertos);
+					caminoMinimo = camino;
+				}else {
+					double minimoAtual = tiempoCamino(camino, aeropuertos);
+					if(minimoAtual < minimo) {
+						caminoMinimo = camino;
+						minimo = minimoAtual;
+					}
+				}
+				i++;
+			}
+		}
+		return caminoMinimo;
 	}
 	
 	public static void minimoEscalas(GrafoEtiquetado aeropuertos) {
@@ -917,18 +957,9 @@ static TecladoIn teclado = new TecladoIn();
 			i++;
 		}
 		i = 1;
-		int max = 0;
-		while(i <= caminosConC.longitud()) {
-			Lista camino = (Lista) caminosConC.recuperar(i);
-			if(i == 1) {
-				max = tiempoCamino(camino, aeropuertos);
-			}else {
-				int maximoActual = tiempoCamino(camino, aeropuertos);
-				if(maximoActual <= max) max = maximoActual;
-			}
-			i++;
-		}
-		System.out.println(caminosConC.toString());
+		double max = 0;
+		Lista minimoCamino = minimoCamino(caminosConC, aeropuertos);
+		escribir("El minimo camino con la escala seleccionada es:"+minimoCamino);
 	}
 	
 	//promociones
@@ -1056,8 +1087,8 @@ static TecladoIn teclado = new TecladoIn();
 			String siglas = leerString();
 			escribir("Ingresar el numero de vuelo:");
 			int numero = leerInt();
-			retorno = (Vuelo) obtenerVueloAux(vuelos, siglas, numero);
-		}while(retorno != null);
+			retorno = new Vuelo(siglas, numero);
+		}while(vuelos.recuperar(retorno) != null);
 		return retorno;
 	}
 	

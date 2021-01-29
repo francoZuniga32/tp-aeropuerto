@@ -40,8 +40,12 @@ public class Aeropuerto implements Comparable{
 	}
 	
 	public boolean equals(Object elem) {
-		Aeropuerto obj = (Aeropuerto) elem;
-		return this.nombreAeronautico.equals(obj.nombreAeronautico);
+		boolean retorno = false;
+		if(elem != null) {
+			Aeropuerto obj = (Aeropuerto) elem;
+			retorno = this.nombreAeronautico.equals(obj.nombreAeronautico);
+		}
+		return retorno;
 	}
 
 	@Override

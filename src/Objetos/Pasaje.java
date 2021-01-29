@@ -38,6 +38,6 @@ public class Pasaje {
 	}
 	
 	public String toString() {
-		return "(["+this.vuelo.toString()+"],"+this.fecha+")";
+		return "(["+this.vuelo.toString()+"],"+this.fecha+", "+this.estado+")";
 	}
 }
