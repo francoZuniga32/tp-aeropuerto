@@ -3,9 +3,9 @@ package grafos;
 public class AdyacenteEtiquetado {
 	private VerticeEtiquetado NodoVert;
 	private AdyacenteEtiquetado NodoAdy;
-	private Object Etiqueta;
+	private double Etiqueta;
 	
-	public AdyacenteEtiquetado(VerticeEtiquetado nodoVert, AdyacenteEtiquetado nodoAdy, Object etiqueta) {
+	public AdyacenteEtiquetado(VerticeEtiquetado nodoVert, AdyacenteEtiquetado nodoAdy, double etiqueta) {
 		this.NodoVert = nodoVert;
 		this.NodoAdy = nodoAdy;
 		this.Etiqueta = etiqueta;
@@ -27,11 +27,11 @@ public class AdyacenteEtiquetado {
 		this.NodoAdy = nodo;
 	}
 	
-	public Object getEtiqueta() {
+	public double getEtiqueta() {
 		return this.Etiqueta;
 	}
 	
-	public void setEtiqueta(Object elem) {
+	public void setEtiqueta(double elem) {
 		this.Etiqueta = elem;
 	}
 }

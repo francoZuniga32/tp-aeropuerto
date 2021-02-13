@@ -75,5 +75,6 @@ public class testAVL {
         System.out.println(A5.toString());
         System.out.println("Eliminamos k: espera Ok"+(A5.eliminar('J')? sOk: sErr));
         System.out.println(A5.toString());
+        System.out.println("Rango ");
     }
 }
