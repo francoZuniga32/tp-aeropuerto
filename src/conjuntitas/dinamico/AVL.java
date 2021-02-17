@@ -111,12 +111,11 @@ public class AVL {
                 //eliminamos la raiz por lo cual se refefine dicha raiz
                 this.raiz = eliminarRaiz(this.raiz);
                 retorno = true;
-            }else{
-               //en caso de que no sea la raiz recorremos los hijos en preorden
-               retorno = eliminarAux(this.raiz, this.raiz.getIzquierdo(), elemento, 'I');
-               if(!retorno){
-                   retorno = eliminarAux(this.raiz, this.raiz.getDerecho(), elemento, 'D');
-               }
+            }else if(this.raiz.getElemento().compareTo(elemento) > 0){
+            	//en caso de que no sea la raiz recorremos los hijos en preorden
+            	retorno = eliminarAux(this.raiz, this.raiz.getIzquierdo(), elemento, 'I');
+            }else {
+            	retorno = eliminarAux(this.raiz, this.raiz.getDerecho(), elemento, 'D');
             }
         }
         
@@ -191,13 +190,10 @@ public class AVL {
                 retorno = true;
             }
         }else{
-            //recorremos en los hijos en preorden
-            if(subRaiz.getIzquierdo() != null){
-                retorno = eliminarAux(subRaiz, subRaiz.getIzquierdo(), elemento, 'I');
-            }
-            
-            if(subRaiz.getDerecho() != null && !retorno){
-                retorno = eliminarAux(subRaiz, subRaiz.getDerecho(), elemento, 'D');
+            if(subRaiz.getElemento().compareTo(elemento) > 0) {
+            	retorno = eliminarAux(subRaiz, subRaiz.getIzquierdo(), elemento, 'I');
+            }else {
+            	retorno = eliminarAux(subRaiz, subRaiz.getIzquierdo(), elemento, 'D');
             }
         }
         //balancemos
@@ -220,11 +216,9 @@ public class AVL {
         if(nodo.getIzquierdo() != null && nodo.getDerecho() != null){
             //tenemos los dos hijos por lo que tenemos que usar el metodo 3
             retorno = 2;
-        }else{
-            if(raiz.getIzquierdo() != null || raiz.getDerecho() != null){
-                //tiene al menos un hijo usamos el metodo 2
-                retorno = 1;
-            }
+        }else if(raiz.getIzquierdo() != null || raiz.getDerecho() != null){
+            //tiene al menos un hijo usamos el metodo 2
+        	retorno = 1;
         }
         //en caso de no pasar por alguno de los if esto significa que usa el metodo 1
         return retorno;
@@ -271,19 +265,10 @@ public class AVL {
         NodoAVL candidatoB = candidatoB(nodo.getDerecho());
         //evaluamos cual tiene menos hijos
         int hijosCandidatoA = condicion(candidatoA);
-        int hijosCandidatoB = condicion(candidatoB);
-        //comparamos
-        if(hijosCandidatoA <= hijosCandidatoB){
-            //obtenemos el valor de este nodo y eliminamos por ese lado
-            nodo.setElemento(candidatoA.getElemento());
-            //eliminamos el elemento de candidato a por I
-            complatado = eliminarAux(nodo, nodo.getIzquierdo(), candidatoA.getElemento(), 'I');
-        }else{
-            //obtenemos el valor de este nodo y eliminamos por ese lado
-            nodo.setElemento(candidatoB.getElemento());
-            //eliminamos el elemento de candidato a por D
-            complatado = eliminarAux(nodo, nodo.getDerecho(), candidatoB.getElemento(), 'D');
-        }
+        //obtenemos el valor de este nodo y eliminamos por ese lado
+        nodo.setElemento(candidatoA.getElemento());
+        //eliminamos el elemento de candidato a por I
+        complatado = eliminarAux(nodo, nodo.getIzquierdo(), candidatoA.getElemento(), 'I');
         if(complatado){
             retorno = nodo;
         }

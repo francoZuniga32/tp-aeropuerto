@@ -34,6 +34,7 @@ public class grafoEtiquetadoTest {
 		System.out.println("Camino mas largo entre A y D: "+G1.caminoMasLargo('A', 'D').toString());
 		System.out.println("Camino con mas Peso entre A y C: "+G1.caminoConMasPeso('A', 'C').toString());
 		System.out.println("Camino con menos Peso entre A y C: "+G1.caminoConMenosPeso('A', 'C').toString());
+		System.out.println("Camino con menos Peso entre A y E: "+G1.caminoConMenosPeso('A', 'E').toString());
 		System.out.println("Listar en profundidad: "+G1.listarProfundidad().toString());
 		System.out.println("Listar en anchura: "+G1.listarAnchura().toString());
 		System.out.println("clone: "+G1.clone().toString());

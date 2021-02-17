@@ -209,20 +209,17 @@ public class GrafoEtiquetado {
 		if (verticeA != null && verticeB != null) {
 			retorno = this.caminoConMasPesoAux(verticeA, verticeB, visitados, retorno, 0, 0);
 		}
-		return (Lista) retorno.recuperar(1);
+		if(!retorno.esVacia()) retorno = (Lista) retorno.recuperar(1);
+		return (Lista) retorno;
 	}
 
 	private Lista caminoConMasPesoAux(VerticeEtiquetado inicio, VerticeEtiquetado destino,
 			HashMap<String, VerticeEtiquetado> visitados, Lista camino, double peso, double pesoComparar) {
 		Lista retorno = new Lista();
-		retorno.insertar(new Lista(), 1);
-		retorno.insertar(0, 2);
 		if (inicio != null) {
 			visitados.put(inicio.getElemento().toString(), inicio);
 			camino.insertar(inicio.getElemento(), camino.longitud() + 1);
 			if (inicio.equals(destino)) {
-				retorno.eliminar(1);
-				retorno.eliminar(2);
 				retorno.insertar(camino.clone(), 1);
 				retorno.insertar(peso, 2);
 			} else {
@@ -230,7 +227,7 @@ public class GrafoEtiquetado {
 				Lista aux = new Lista();
 				while (adyacente != null) {
 					if (visitados.get(adyacente.getVertice().getElemento().toString()) == null) {
-						if (retorno.recuperar(2).equals(0)) {
+						if (retorno.esVacia()) {
 							retorno = this.caminoConMasPesoAux(adyacente.getVertice(), destino, visitados, camino,
 									peso + adyacente.getEtiqueta(), pesoComparar);
 						} else {
@@ -245,7 +242,6 @@ public class GrafoEtiquetado {
 			}
 			visitados.remove(inicio.getElemento().toString());
 			camino.eliminar(camino.localizar(inicio.getElemento()));
-			System.out.println(retorno.toString());
 		}
 		return retorno;
 	}
@@ -259,20 +255,17 @@ public class GrafoEtiquetado {
 		if (verticeA != null && verticeB != null) {
 			retorno = this.caminoConMenosPesoAux(verticeA, verticeB, visitados, retorno, 0, 0);
 		}
-		return (Lista) retorno.recuperar(1);
+		if(!retorno.esVacia()) retorno = (Lista) retorno.recuperar(1);
+		return retorno;
 	}
 
 	private Lista caminoConMenosPesoAux(VerticeEtiquetado inicio, VerticeEtiquetado destino,
 			HashMap<String, VerticeEtiquetado> visitados, Lista camino, double peso, double pesoComparar) {
 		Lista retorno = new Lista();
-		retorno.insertar(new Lista(), 1);
-		retorno.insertar(0, 2);
 		if (inicio != null) {
 			visitados.put(inicio.getElemento().toString(), inicio);
 			camino.insertar(inicio.getElemento(), camino.longitud() + 1);
 			if (inicio.equals(destino)) {
-				retorno.eliminar(1);
-				retorno.eliminar(2);
 				retorno.insertar(camino.clone(), 1);
 				retorno.insertar(peso, 2);
 			} else {
@@ -280,13 +273,13 @@ public class GrafoEtiquetado {
 				Lista aux = new Lista();
 				while (adyacente != null) {
 					if (visitados.get(adyacente.getVertice().getElemento().toString()) == null) {
-						if (retorno.recuperar(2).equals(0)) {
+						if (retorno.esVacia()) {
 							retorno = this.caminoConMenosPesoAux(adyacente.getVertice(), destino, visitados, camino,
 									peso + adyacente.getEtiqueta(), pesoComparar);
 						} else {
 							aux = this.caminoConMenosPesoAux(adyacente.getVertice(), destino, visitados, camino,
 									peso + adyacente.getEtiqueta(), (Double) retorno.recuperar(2));
-							if (!aux.esVacia() && (Double) aux.recuperar(2) <= pesoComparar)
+							if (!aux.esVacia() && (double) aux.recuperar(2) != 0 && (double) aux.recuperar(2) <= pesoComparar)
 								retorno = aux;
 						}
 					}

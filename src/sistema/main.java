@@ -886,9 +886,9 @@ static TecladoIn teclado = new TecladoIn();
 	public static void minimoTiempoDeVuelo(GrafoEtiquetado aeropuertos) {
 		Aeropuerto aeropuertoA = obtenerAeropuerto(aeropuertos);
 		Aeropuerto aeropuertoB = obtenerAeropuerto(aeropuertos);
-		Lista caminos = aeropuertos.caminos(aeropuertoA, aeropuertoB);
-		Lista caminoMinimo = minimoCamino(caminos, aeropuertos);
-		escribir("El viaje y sus escalas mas rapidas para la ruta ingresada es:"+caminoMinimo.toString());
+		Lista camino = aeropuertos.caminoConMenosPeso(aeropuertoA, aeropuertoB);
+		
+		escribir("El viaje y sus escalas mas rapidas para la ruta ingresada es:"+camino.toString());
 	}
 	
 	public static double tiempoCamino(Lista camino, GrafoEtiquetado aeropuertos) {

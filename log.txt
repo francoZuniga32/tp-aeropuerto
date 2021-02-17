@@ -143,3 +143,484 @@ Los clientes a pormocionar
 8. Promociones
 9. TEST
 10. salir
+-- Seleccione una de las opciones : --
+1. ABM (Altas-Bajas-Modificaciones) de aeropuertos
+2. ABM (Altas-Bajas-Modificaciones) de clientes
+3. ABM (Altas-Bajas-Modificaciones) de vuelos
+4. ABM (Altas-Bajas-Modificaciones) de pasajes
+5. Operaciones Cliente
+6. Operaciones Vuelos
+7. Tiempos de viaje 
+8. Promociones
+9. TEST
+10. salir
+7
+-- Seleccione una de las opciones : --
+1. Maximo vuelos de un viaje 
+2. Menor tiempo de vuelos en un viaje
+3. Menor cantidad de escalas
+4. Menor tiempo de vuelos con una escala seleccionada
+5. salir
+1
+Ingresar nombre aeroporturario:
+NQN
+Ingresar nombre aeroporturario:
+SAL
+inrese un numero maximo de escalas
+4
+existe un minimo de escalas para dichos aeropuertos y es:[|NQN|,|MDZ|,|SAL|]
+-- Seleccione una de las opciones : --
+1. Maximo vuelos de un viaje 
+2. Menor tiempo de vuelos en un viaje
+3. Menor cantidad de escalas
+4. Menor tiempo de vuelos con una escala seleccionada
+5. salir
+2
+Ingresar nombre aeroporturario:
+NQN
+Ingresar nombre aeroporturario:
+SAL
+-- Seleccione una de las opciones : --
+1. ABM (Altas-Bajas-Modificaciones) de aeropuertos
+2. ABM (Altas-Bajas-Modificaciones) de clientes
+3. ABM (Altas-Bajas-Modificaciones) de vuelos
+4. ABM (Altas-Bajas-Modificaciones) de pasajes
+5. Operaciones Cliente
+6. Operaciones Vuelos
+7. Tiempos de viaje 
+8. Promociones
+9. TEST
+10. salir
+7
+-- Seleccione una de las opciones : --
+1. Maximo vuelos de un viaje 
+2. Menor tiempo de vuelos en un viaje
+3. Menor cantidad de escalas
+4. Menor tiempo de vuelos con una escala seleccionada
+5. salir
+2
+Ingresar nombre aeroporturario:
+NQN
+Ingresar nombre aeroporturario:
+SAL
+El viaje y sus escalas mas rapidas para la ruta ingresada es:Lista Vacia
+-- Seleccione una de las opciones : --
+1. Maximo vuelos de un viaje 
+2. Menor tiempo de vuelos en un viaje
+3. Menor cantidad de escalas
+4. Menor tiempo de vuelos con una escala seleccionada
+5. salir
+-- Seleccione una de las opciones : --
+1. ABM (Altas-Bajas-Modificaciones) de aeropuertos
+2. ABM (Altas-Bajas-Modificaciones) de clientes
+3. ABM (Altas-Bajas-Modificaciones) de vuelos
+4. ABM (Altas-Bajas-Modificaciones) de pasajes
+5. Operaciones Cliente
+6. Operaciones Vuelos
+7. Tiempos de viaje 
+8. Promociones
+9. TEST
+10. salir
+7
+-- Seleccione una de las opciones : --
+1. Maximo vuelos de un viaje 
+2. Menor tiempo de vuelos en un viaje
+3. Menor cantidad de escalas
+4. Menor tiempo de vuelos con una escala seleccionada
+5. salir
+2
+Ingresar nombre aeroporturario:
+NQN
+Ingresar nombre aeroporturario:
+SAL
+-- Seleccione una de las opciones : --
+1. ABM (Altas-Bajas-Modificaciones) de aeropuertos
+2. ABM (Altas-Bajas-Modificaciones) de clientes
+3. ABM (Altas-Bajas-Modificaciones) de vuelos
+4. ABM (Altas-Bajas-Modificaciones) de pasajes
+5. Operaciones Cliente
+6. Operaciones Vuelos
+7. Tiempos de viaje 
+8. Promociones
+9. TEST
+10. salir
+9
+-- -- Sistema de debug -- --
+-- Aeropuertos --
+|NQN|:->(|RN|,15.0)->(|MDZ|,14.0)->(|CRD|,12.0)
+|RN|:->(|NQN|,15.0)
+|MDZ|:->(|NQN|,14.0)->(|COR|,16.0)->(|SAL|,20.0)
+|CRD|:->(|NQN|,12.0)
+|COR|:->(|MDZ|,16.0)->(|JUJ|,14.0)->(|SAL|,5.0)->(|ROS|,8.0)
+|SAL|:->(|MDZ|,20.0)->(|JUJ|,4.0)->(|COR|,5.0)
+|JUJ|:->(|SAL|,4.0)->(|COR|,14.0)
+|ROS|:->(|COR|,8.0)
+
+-- Clientes --
+(tipo: nacional, 41321297, franco) Al: 1 : HI:- HD:(tipo: nacional, 42532589, mariana)
+(tipo: nacional, 42532589, mariana) Al: 0 : HI:- HD:-
+
+-- Vuelos --
+(AA5482) Al: 1 : HI:(AA1252) HD:(AA5845)
+(AA1252) Al: 0 : HI:- HD:-
+(AA5845) Al: 0 : HI:- HD:-
+
+-- Pasajes --
+{(tipo: nacional, 41321297, franco)=[([(AA1252)],12/02/2020, pendiente),([(AA5482)],18/02/2020, pendiente),([(AA5845)],20/03/2020, pendiente)]}
+-- Seleccione una de las opciones : --
+1. ABM (Altas-Bajas-Modificaciones) de aeropuertos
+2. ABM (Altas-Bajas-Modificaciones) de clientes
+3. ABM (Altas-Bajas-Modificaciones) de vuelos
+4. ABM (Altas-Bajas-Modificaciones) de pasajes
+5. Operaciones Cliente
+6. Operaciones Vuelos
+7. Tiempos de viaje 
+8. Promociones
+9. TEST
+10. salir
+7
+-- Seleccione una de las opciones : --
+1. Maximo vuelos de un viaje 
+2. Menor tiempo de vuelos en un viaje
+3. Menor cantidad de escalas
+4. Menor tiempo de vuelos con una escala seleccionada
+5. salir
+2
+Ingresar nombre aeroporturario:
+NQN
+Ingresar nombre aeroporturario:
+SAL
+-- Seleccione una de las opciones : --
+1. ABM (Altas-Bajas-Modificaciones) de aeropuertos
+2. ABM (Altas-Bajas-Modificaciones) de clientes
+3. ABM (Altas-Bajas-Modificaciones) de vuelos
+4. ABM (Altas-Bajas-Modificaciones) de pasajes
+5. Operaciones Cliente
+6. Operaciones Vuelos
+7. Tiempos de viaje 
+8. Promociones
+9. TEST
+10. salir
+7
+-- Seleccione una de las opciones : --
+1. Maximo vuelos de un viaje 
+2. Menor tiempo de vuelos en un viaje
+3. Menor cantidad de escalas
+4. Menor tiempo de vuelos con una escala seleccionada
+5. salir
+2
+Ingresar nombre aeroporturario:
+NQN
+Ingresar nombre aeroporturario:
+SAL
+El viaje y sus escalas mas rapidas para la ruta ingresada es:Lista Vacia
+-- Seleccione una de las opciones : --
+1. Maximo vuelos de un viaje 
+2. Menor tiempo de vuelos en un viaje
+3. Menor cantidad de escalas
+4. Menor tiempo de vuelos con una escala seleccionada
+5. salir
+-- Seleccione una de las opciones : --
+1. ABM (Altas-Bajas-Modificaciones) de aeropuertos
+2. ABM (Altas-Bajas-Modificaciones) de clientes
+3. ABM (Altas-Bajas-Modificaciones) de vuelos
+4. ABM (Altas-Bajas-Modificaciones) de pasajes
+5. Operaciones Cliente
+6. Operaciones Vuelos
+7. Tiempos de viaje 
+8. Promociones
+9. TEST
+10. salir
+7
+-- Seleccione una de las opciones : --
+1. Maximo vuelos de un viaje 
+2. Menor tiempo de vuelos en un viaje
+3. Menor cantidad de escalas
+4. Menor tiempo de vuelos con una escala seleccionada
+5. salir
+2
+Ingresar nombre aeroporturario:
+NQN
+Ingresar nombre aeroporturario:
+SAL
+-- Seleccione una de las opciones : --
+1. ABM (Altas-Bajas-Modificaciones) de aeropuertos
+2. ABM (Altas-Bajas-Modificaciones) de clientes
+3. ABM (Altas-Bajas-Modificaciones) de vuelos
+4. ABM (Altas-Bajas-Modificaciones) de pasajes
+5. Operaciones Cliente
+6. Operaciones Vuelos
+7. Tiempos de viaje 
+8. Promociones
+9. TEST
+10. salir
+7
+-- Seleccione una de las opciones : --
+1. Maximo vuelos de un viaje 
+2. Menor tiempo de vuelos en un viaje
+3. Menor cantidad de escalas
+4. Menor tiempo de vuelos con una escala seleccionada
+5. salir
+2
+Ingresar nombre aeroporturario:
+NQN
+Ingresar nombre aeroporturario:
+SAL
+-- Seleccione una de las opciones : --
+1. ABM (Altas-Bajas-Modificaciones) de aeropuertos
+2. ABM (Altas-Bajas-Modificaciones) de clientes
+3. ABM (Altas-Bajas-Modificaciones) de vuelos
+4. ABM (Altas-Bajas-Modificaciones) de pasajes
+5. Operaciones Cliente
+6. Operaciones Vuelos
+7. Tiempos de viaje 
+8. Promociones
+9. TEST
+10. salir
+9
+-- -- Sistema de debug -- --
+-- Aeropuertos --
+|NQN|:->(|RN|,15.0)->(|MDZ|,14.0)->(|CRD|,12.0)
+|RN|:->(|NQN|,15.0)
+|MDZ|:->(|NQN|,14.0)->(|COR|,16.0)->(|SAL|,20.0)
+|CRD|:->(|NQN|,12.0)
+|COR|:->(|MDZ|,16.0)->(|JUJ|,14.0)->(|SAL|,5.0)->(|ROS|,8.0)
+|SAL|:->(|MDZ|,20.0)->(|JUJ|,4.0)->(|COR|,5.0)
+|JUJ|:->(|SAL|,4.0)->(|COR|,14.0)
+|ROS|:->(|COR|,8.0)
+
+-- Clientes --
+(tipo: nacional, 41321297, franco) Al: 1 : HI:- HD:(tipo: nacional, 42532589, mariana)
+(tipo: nacional, 42532589, mariana) Al: 0 : HI:- HD:-
+
+-- Vuelos --
+(AA5482) Al: 1 : HI:(AA1252) HD:(AA5845)
+(AA1252) Al: 0 : HI:- HD:-
+(AA5845) Al: 0 : HI:- HD:-
+
+-- Pasajes --
+{(tipo: nacional, 41321297, franco)=[([(AA1252)],12/02/2020, pendiente),([(AA5482)],18/02/2020, pendiente),([(AA5845)],20/03/2020, pendiente)]}
+-- Seleccione una de las opciones : --
+1. ABM (Altas-Bajas-Modificaciones) de aeropuertos
+2. ABM (Altas-Bajas-Modificaciones) de clientes
+3. ABM (Altas-Bajas-Modificaciones) de vuelos
+4. ABM (Altas-Bajas-Modificaciones) de pasajes
+5. Operaciones Cliente
+6. Operaciones Vuelos
+7. Tiempos de viaje 
+8. Promociones
+9. TEST
+10. salir
+7
+-- Seleccione una de las opciones : --
+1. Maximo vuelos de un viaje 
+2. Menor tiempo de vuelos en un viaje
+3. Menor cantidad de escalas
+4. Menor tiempo de vuelos con una escala seleccionada
+5. salir
+2
+Ingresar nombre aeroporturario:
+NQN
+Ingresar nombre aeroporturario:
+SAL
+-- Seleccione una de las opciones : --
+1. ABM (Altas-Bajas-Modificaciones) de aeropuertos
+2. ABM (Altas-Bajas-Modificaciones) de clientes
+3. ABM (Altas-Bajas-Modificaciones) de vuelos
+4. ABM (Altas-Bajas-Modificaciones) de pasajes
+5. Operaciones Cliente
+6. Operaciones Vuelos
+7. Tiempos de viaje 
+8. Promociones
+9. TEST
+10. salir
+9
+-- -- Sistema de debug -- --
+-- Aeropuertos --
+|NQN|:->(|RN|,15.0)->(|MDZ|,14.0)->(|CRD|,12.0)
+|RN|:->(|NQN|,15.0)
+|MDZ|:->(|NQN|,14.0)->(|COR|,16.0)->(|SAL|,20.0)
+|CRD|:->(|NQN|,12.0)
+|COR|:->(|MDZ|,16.0)->(|JUJ|,14.0)->(|SAL|,5.0)->(|ROS|,8.0)
+|SAL|:->(|MDZ|,20.0)->(|JUJ|,4.0)->(|COR|,5.0)
+|JUJ|:->(|SAL|,4.0)->(|COR|,14.0)
+|ROS|:->(|COR|,8.0)
+
+-- Clientes --
+(tipo: nacional, 41321297, franco) Al: 1 : HI:- HD:(tipo: nacional, 42532589, mariana)
+(tipo: nacional, 42532589, mariana) Al: 0 : HI:- HD:-
+
+-- Vuelos --
+(AA5482) Al: 1 : HI:(AA1252) HD:(AA5845)
+(AA1252) Al: 0 : HI:- HD:-
+(AA5845) Al: 0 : HI:- HD:-
+
+-- Pasajes --
+{(tipo: nacional, 41321297, franco)=[([(AA1252)],12/02/2020, pendiente),([(AA5482)],18/02/2020, pendiente),([(AA5845)],20/03/2020, pendiente)]}
+-- Seleccione una de las opciones : --
+1. ABM (Altas-Bajas-Modificaciones) de aeropuertos
+2. ABM (Altas-Bajas-Modificaciones) de clientes
+3. ABM (Altas-Bajas-Modificaciones) de vuelos
+4. ABM (Altas-Bajas-Modificaciones) de pasajes
+5. Operaciones Cliente
+6. Operaciones Vuelos
+7. Tiempos de viaje 
+8. Promociones
+9. TEST
+10. salir
+7
+-- Seleccione una de las opciones : --
+1. Maximo vuelos de un viaje 
+2. Menor tiempo de vuelos en un viaje
+3. Menor cantidad de escalas
+4. Menor tiempo de vuelos con una escala seleccionada
+5. salir
+2
+Ingresar nombre aeroporturario:
+NQN
+Ingresar nombre aeroporturario:
+SAL
+-- Seleccione una de las opciones : --
+1. ABM (Altas-Bajas-Modificaciones) de aeropuertos
+2. ABM (Altas-Bajas-Modificaciones) de clientes
+3. ABM (Altas-Bajas-Modificaciones) de vuelos
+4. ABM (Altas-Bajas-Modificaciones) de pasajes
+5. Operaciones Cliente
+6. Operaciones Vuelos
+7. Tiempos de viaje 
+8. Promociones
+9. TEST
+10. salir
+9
+-- -- Sistema de debug -- --
+-- Aeropuertos --
+|NQN|:->(|RN|,15.0)->(|MDZ|,14.0)->(|CRD|,12.0)
+|RN|:->(|NQN|,15.0)
+|MDZ|:->(|NQN|,14.0)->(|COR|,16.0)->(|SAL|,20.0)
+|CRD|:->(|NQN|,12.0)
+|COR|:->(|MDZ|,16.0)->(|JUJ|,14.0)->(|SAL|,5.0)->(|ROS|,8.0)
+|SAL|:->(|MDZ|,20.0)->(|JUJ|,4.0)->(|COR|,5.0)
+|JUJ|:->(|SAL|,4.0)->(|COR|,14.0)
+|ROS|:->(|COR|,8.0)
+
+-- Clientes --
+(tipo: nacional, 41321297, franco) Al: 1 : HI:- HD:(tipo: nacional, 42532589, mariana)
+(tipo: nacional, 42532589, mariana) Al: 0 : HI:- HD:-
+
+-- Vuelos --
+(AA5482) Al: 1 : HI:(AA1252) HD:(AA5845)
+(AA1252) Al: 0 : HI:- HD:-
+(AA5845) Al: 0 : HI:- HD:-
+
+-- Pasajes --
+{(tipo: nacional, 41321297, franco)=[([(AA1252)],12/02/2020, pendiente),([(AA5482)],18/02/2020, pendiente),([(AA5845)],20/03/2020, pendiente)]}
+-- Seleccione una de las opciones : --
+1. ABM (Altas-Bajas-Modificaciones) de aeropuertos
+2. ABM (Altas-Bajas-Modificaciones) de clientes
+3. ABM (Altas-Bajas-Modificaciones) de vuelos
+4. ABM (Altas-Bajas-Modificaciones) de pasajes
+5. Operaciones Cliente
+6. Operaciones Vuelos
+7. Tiempos de viaje 
+8. Promociones
+9. TEST
+10. salir
+7
+-- Seleccione una de las opciones : --
+1. Maximo vuelos de un viaje 
+2. Menor tiempo de vuelos en un viaje
+3. Menor cantidad de escalas
+4. Menor tiempo de vuelos con una escala seleccionada
+5. salir
+2
+Ingresar nombre aeroporturario:
+NQN
+Ingresar nombre aeroporturario:
+SAL
+-- Seleccione una de las opciones : --
+1. ABM (Altas-Bajas-Modificaciones) de aeropuertos
+2. ABM (Altas-Bajas-Modificaciones) de clientes
+3. ABM (Altas-Bajas-Modificaciones) de vuelos
+4. ABM (Altas-Bajas-Modificaciones) de pasajes
+5. Operaciones Cliente
+6. Operaciones Vuelos
+7. Tiempos de viaje 
+8. Promociones
+9. TEST
+10. salir
+9
+-- -- Sistema de debug -- --
+-- Aeropuertos --
+|NQN|:->(|RN|,15.0)->(|MDZ|,14.0)->(|CRD|,12.0)
+|RN|:->(|NQN|,15.0)
+|MDZ|:->(|NQN|,14.0)->(|COR|,16.0)->(|SAL|,20.0)
+|CRD|:->(|NQN|,12.0)
+|COR|:->(|MDZ|,16.0)->(|JUJ|,14.0)->(|SAL|,5.0)->(|ROS|,8.0)
+|SAL|:->(|MDZ|,20.0)->(|JUJ|,4.0)->(|COR|,5.0)
+|JUJ|:->(|SAL|,4.0)->(|COR|,14.0)
+|ROS|:->(|COR|,8.0)
+
+-- Clientes --
+(tipo: nacional, 41321297, franco) Al: 1 : HI:- HD:(tipo: nacional, 42532589, mariana)
+(tipo: nacional, 42532589, mariana) Al: 0 : HI:- HD:-
+
+-- Vuelos --
+(AA5482) Al: 1 : HI:(AA1252) HD:(AA5845)
+(AA1252) Al: 0 : HI:- HD:-
+(AA5845) Al: 0 : HI:- HD:-
+
+-- Pasajes --
+{(tipo: nacional, 41321297, franco)=[([(AA1252)],12/02/2020, pendiente),([(AA5482)],18/02/2020, pendiente),([(AA5845)],20/03/2020, pendiente)]}
+-- Seleccione una de las opciones : --
+1. ABM (Altas-Bajas-Modificaciones) de aeropuertos
+2. ABM (Altas-Bajas-Modificaciones) de clientes
+3. ABM (Altas-Bajas-Modificaciones) de vuelos
+4. ABM (Altas-Bajas-Modificaciones) de pasajes
+5. Operaciones Cliente
+6. Operaciones Vuelos
+7. Tiempos de viaje 
+8. Promociones
+9. TEST
+10. salir
+7
+-- Seleccione una de las opciones : --
+1. Maximo vuelos de un viaje 
+2. Menor tiempo de vuelos en un viaje
+3. Menor cantidad de escalas
+4. Menor tiempo de vuelos con una escala seleccionada
+5. salir
+2
+Ingresar nombre aeroporturario:
+NQN
+Ingresar nombre aeroporturario:
+SAL
+-- Seleccione una de las opciones : --
+1. ABM (Altas-Bajas-Modificaciones) de aeropuertos
+2. ABM (Altas-Bajas-Modificaciones) de clientes
+3. ABM (Altas-Bajas-Modificaciones) de vuelos
+4. ABM (Altas-Bajas-Modificaciones) de pasajes
+5. Operaciones Cliente
+6. Operaciones Vuelos
+7. Tiempos de viaje 
+8. Promociones
+9. TEST
+10. salir
+7
+-- Seleccione una de las opciones : --
+1. Maximo vuelos de un viaje 
+2. Menor tiempo de vuelos en un viaje
+3. Menor cantidad de escalas
+4. Menor tiempo de vuelos con una escala seleccionada
+5. salir
+2
+Ingresar nombre aeroporturario:
+NQN
+Ingresar nombre aeroporturario:
+SAL
+El viaje y sus escalas mas rapidas para la ruta ingresada es:[|NQN|,|MDZ|,|COR|,|JUJ|,|SAL|]
+-- Seleccione una de las opciones : --
+1. Maximo vuelos de un viaje 
+2. Menor tiempo de vuelos en un viaje
+3. Menor cantidad de escalas
+4. Menor tiempo de vuelos con una escala seleccionada
+5. salir
