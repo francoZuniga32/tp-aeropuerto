@@ -21,20 +21,25 @@ public class grafoEtiquetadoTest {
 		System.out.println(G1.toString());
 		System.out.println("TEST DE ARCOS");
 		System.out.println("Insertamos arco entre A y A con la etiqueta '5': Espera Ok:\t"+(G1.insertarArco('A', 'A', 5)? "Ok": "False"));
+		System.out.println("Insertamos arco entre A y E con la etiqueta '13': Espera Ok:\t"+(G1.insertarArco('A', 'E', 13)? "Ok": "False"));
 		System.out.println("Insertamos arco entre A y B con la etiqueta '10': Espera Ok:\t"+(G1.insertarArco('A', 'B', 10)? "Ok": "False"));
 		System.out.println("Insertamos arco entre A y D con la etiqueta '13': Espera Ok:\t"+(G1.insertarArco('A', 'D', 13)? "Ok": "False"));
 		System.out.println("Insertamos arco entre B y C con la etiqueta '12': Espera Ok:\t"+(G1.insertarArco('B', 'C', 12)? "Ok": "False"));
 		System.out.println("Insertamos arco entre C y D con la etiqueta '4': Espera Ok:\t"+(G1.insertarArco('C', 'D', 15)? "Ok": "False"));
+		System.out.println("Insertamos arco entre D y E con la etiqueta '25': Espera Ok:\t"+(G1.insertarArco('D', 'E', 25)? "Ok": "False"));
 		System.out.println("Insertamos arco entre B y C con la etiqueta '15': Espera Ok:\t"+(G1.insertarArco('B', 'C', 15)? "Ok": "False"));
 		System.out.println("Insertamos arco entre F y F con la etiqueta '15': Espera False:\t"+(G1.insertarArco('F', 'F', 15)? "Ok": "False"));
 		System.out.println("Insertamos arco entre F y C con la etiqueta '15': Espera Ok:\t"+(G1.insertarArco('F', 'C', 15)? "Ok": "False"));
 		System.out.println(G1.toString());
 		
-		System.out.println("Camino mas corto entre A y D: "+G1.caminoMasCorto('A', 'D').toString());
+		System.out.println("Camino mas corto entre A y E: "+G1.caminoMasCorto('A', 'E').toString());
 		System.out.println("Camino mas largo entre A y D: "+G1.caminoMasLargo('A', 'D').toString());
 		System.out.println("Camino con mas Peso entre A y C: "+G1.caminoConMasPeso('A', 'C').toString());
-		System.out.println("Camino con menos Peso entre A y C: "+G1.caminoConMenosPeso('A', 'C').toString());
-		System.out.println("Camino con menos Peso entre A y E: "+G1.caminoConMenosPeso('A', 'E').toString());
+		//System.out.println("Camino con menos Peso entre A y C: "+G1.caminoConMenosPeso('A', 'C').toString());
+		//System.out.println("Camino con menos Peso entre A y E: "+G1.caminoConMenosPeso('A', 'E').toString());
+		System.out.println("Camino mas corto entre A y E que contiene a D:"+G1.menorCaminoQueTiene('A', 'C', 'B').toString());
+		System.out.println("Camino mas rapido entre A y D que contiene a C:"+G1.caminoMasRapidoQuePasa('A', 'B', 'D').toString());
+		System.out.println("Camino mas corto entre A y C que contiene a 2 vetices:"+G1.caminoConTopeDeVertices('A', 'C', 2).toString());
 		System.out.println("Listar en profundidad: "+G1.listarProfundidad().toString());
 		System.out.println("Listar en anchura: "+G1.listarAnchura().toString());
 		System.out.println("clone: "+G1.clone().toString());

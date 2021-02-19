@@ -265,29 +265,31 @@ public class GrafoEtiquetado {
 		if (inicio != null) {
 			visitados.put(inicio.getElemento().toString(), inicio);
 			camino.insertar(inicio.getElemento(), camino.longitud() + 1);
-			if (inicio.equals(destino)) {
-				retorno.insertar(camino.clone(), 1);
-				retorno.insertar(peso, 2);
-			} else {
-				AdyacenteEtiquetado adyacente = inicio.getAdyacente();
-				Lista aux = new Lista();
-				while (adyacente != null) {
-					if (visitados.get(adyacente.getVertice().getElemento().toString()) == null) {
-						if (retorno.esVacia()) {
-							retorno = this.caminoConMenosPesoAux(adyacente.getVertice(), destino, visitados, camino,
-									peso + adyacente.getEtiqueta(), pesoComparar);
-						} else {
-							aux = this.caminoConMenosPesoAux(adyacente.getVertice(), destino, visitados, camino,
-									peso + adyacente.getEtiqueta(), (Double) retorno.recuperar(2));
-							if (!aux.esVacia() && (double) aux.recuperar(2) != 0 && (double) aux.recuperar(2) <= pesoComparar)
-								retorno = aux;
+			if(pesoComparar == 0 || peso <= pesoComparar) {
+				if (inicio.equals(destino)) {
+					retorno.insertar(camino.clone(), 1);
+					retorno.insertar(peso, 2);
+				} else {
+					AdyacenteEtiquetado adyacente = inicio.getAdyacente();
+					Lista aux = new Lista();
+					while (adyacente != null) {
+						if (visitados.get(adyacente.getVertice().getElemento().toString()) == null) {
+							if (retorno.esVacia()) {
+								retorno = this.caminoConMenosPesoAux(adyacente.getVertice(), destino, visitados, camino,
+										peso + adyacente.getEtiqueta(), pesoComparar);
+							} else {
+								aux = this.caminoConMenosPesoAux(adyacente.getVertice(), destino, visitados, camino,
+										peso + adyacente.getEtiqueta(), (Double) retorno.recuperar(2));
+								if (!aux.esVacia() && (double) aux.recuperar(2) != 0 && (double) aux.recuperar(2) <= pesoComparar)
+									retorno = aux;
+							}
 						}
+						adyacente = adyacente.getSiguienteAdy();
 					}
-					adyacente = adyacente.getSiguienteAdy();
 				}
+				visitados.remove(inicio.getElemento().toString());
+				camino.eliminar(camino.localizar(inicio.getElemento()));
 			}
-			visitados.remove(inicio.getElemento().toString());
-			camino.eliminar(camino.localizar(inicio.getElemento()));
 		}
 		return retorno;
 	}
@@ -349,6 +351,152 @@ public class GrafoEtiquetado {
 		}
 
 		return retorno;
+	}
+	
+	public Lista menorCaminoQueTiene(Object elemA, Object elemB, Object elemC) {
+		Lista camino = new Lista();
+		Lista comparar = new Lista();
+		HashMap<String, VerticeEtiquetado> visitados = new HashMap<String, VerticeEtiquetado>();
+		VerticeEtiquetado aux = this.inicio;
+		VerticeEtiquetado verticeA = null;
+		VerticeEtiquetado verticeB = null;
+		VerticeEtiquetado verticeC = null;
+		boolean corte = false;
+		while (aux != null && !corte) {
+			if (aux.getElemento().equals(elemA))		verticeA = aux;
+			else if (aux.getElemento().equals(elemB))	verticeB = aux;
+			else if(aux.getElemento().equals(elemC))	verticeC = aux;
+			corte = verticeA != null && verticeB != null && verticeC != null;
+			aux = aux.getSigVertice();
+		}
+		if(verticeA != null && verticeB != null && verticeC != null) {
+			comparar = this.menorCaminoQueTieneAux(verticeA, verticeB, verticeC, visitados, camino, comparar);
+		}
+		return comparar;
+	}
+	
+	private Lista menorCaminoQueTieneAux(VerticeEtiquetado inicio, VerticeEtiquetado destino, VerticeEtiquetado incluido,
+			HashMap<String, VerticeEtiquetado> visitados, Lista camino, Lista comparar) {
+		if (inicio != null) {
+			visitados.put(inicio.getElemento().toString(), inicio);
+			camino.insertar(inicio.getElemento(), camino.longitud() + 1);
+			
+			if (comparar.esVacia() || camino.longitud() < comparar.longitud()) {
+				
+				if (inicio.equals(destino)) {
+					if(camino.localizar(incluido.getElemento()) != -1) comparar = camino.clone();
+				} else {
+					AdyacenteEtiquetado adyacente = inicio.getAdyacente();
+					while (adyacente != null) {
+						if (visitados.get(adyacente.getVertice().getElemento().toString()) == null) {
+							comparar = this.menorCaminoQueTieneAux(adyacente.getVertice(), destino, incluido, visitados, camino,
+									comparar);
+						}
+						adyacente = adyacente.getSiguienteAdy();
+					}
+				}
+			}
+			visitados.remove(inicio.getElemento().toString());
+			camino.eliminar(camino.localizar(inicio.getElemento()));
+		}
+		return comparar;
+	}
+	
+	public Lista caminoMasRapidoQuePasa(Object elemA, Object elemB, Object elemC) {
+		Lista camino = new Lista();
+		Lista comparar = new Lista();
+		HashMap<String, VerticeEtiquetado> visitados = new HashMap<String, VerticeEtiquetado>();
+		
+		VerticeEtiquetado aux = this.inicio;
+		VerticeEtiquetado verticeA = null;
+		VerticeEtiquetado verticeB = null;
+		VerticeEtiquetado verticeC = null;
+		boolean corte = false;
+		while (aux != null && !corte) {
+			if (aux.getElemento().equals(elemA))		verticeA = aux;
+			else if (aux.getElemento().equals(elemB))	verticeB = aux;
+			else if(aux.getElemento().equals(elemC))	verticeC = aux;
+			corte = verticeA != null && verticeB != null && verticeC != null;
+			aux = aux.getSigVertice();
+		}
+		if(verticeA != null && verticeB != null && verticeC != null) {
+			camino = this.menorCaminoQueTieneAux(verticeA, verticeB, verticeC, visitados, camino, comparar);
+		}
+		
+		return camino;
+	}
+	
+	private Lista caminoMasRapidoQuePasaAux(VerticeEtiquetado inicio, VerticeEtiquetado destino, VerticeEtiquetado incluido,
+			HashMap<String, VerticeEtiquetado> visitados, Lista camino, double peso, double pesoComparar) {
+		Lista retorno = new Lista();
+		if (inicio != null) {
+			visitados.put(inicio.getElemento().toString(), inicio);
+			camino.insertar(inicio.getElemento(), camino.longitud() + 1);
+			if (inicio.equals(destino)) {
+				retorno.insertar(camino.clone(), 1);
+				retorno.insertar(peso, 2);
+			} else {
+				AdyacenteEtiquetado adyacente = inicio.getAdyacente();
+				Lista aux = new Lista();
+				while (adyacente != null) {
+					if (visitados.get(adyacente.getVertice().getElemento().toString()) == null) {
+						if (retorno.esVacia()) {
+							retorno = this.caminoMasRapidoQuePasaAux(adyacente.getVertice(), destino, incluido, visitados, camino,
+									peso + adyacente.getEtiqueta(), pesoComparar);
+						} else {
+							aux = this.caminoMasRapidoQuePasaAux(adyacente.getVertice(), destino, incluido, visitados, camino,
+									peso + adyacente.getEtiqueta(), (Double) retorno.recuperar(2));
+							if (!aux.esVacia() && (Double) aux.recuperar(2) >= pesoComparar && aux.localizar(incluido.getElemento()) != -1)
+								retorno = aux;
+						}
+					}
+					adyacente = adyacente.getSiguienteAdy();
+				}
+			}
+			visitados.remove(inicio.getElemento().toString());
+			camino.eliminar(camino.localizar(inicio.getElemento()));
+		}
+		return retorno;
+	}
+	
+	public Lista caminoConTopeDeVertices(Object elemA, Object elemB, int cantidadVertices) {
+		Lista retorno = new Lista();
+		Lista comparar = new Lista();
+		HashMap<String, VerticeEtiquetado> visitados = new HashMap<String, VerticeEtiquetado>();
+		HashMap<Object, VerticeEtiquetado> vertices = this.ubicarVertices(elemA, elemB);
+		VerticeEtiquetado verticeA = vertices.get(elemA);
+		VerticeEtiquetado verticeB = vertices.get(elemB);
+		if (verticeA != null && verticeB != null) {
+			comparar = this.caminoConTopeDeVerticesAux(verticeA, verticeB, cantidadVertices, visitados, retorno, comparar);
+		}
+		return comparar;
+	}
+	
+	private Lista caminoConTopeDeVerticesAux(VerticeEtiquetado inicio, VerticeEtiquetado destino, int vertices,
+			HashMap<String, VerticeEtiquetado> visitados, Lista camino, Lista comparar) {
+		if (inicio != null) {
+			visitados.put(inicio.getElemento().toString(), inicio);
+			camino.insertar(inicio.getElemento(), camino.longitud() + 1);
+			if (camino.longitud() <= vertices && comparar.esVacia() || camino.longitud() < comparar.longitud()) {
+				System.out.println("camino: "+camino.toString()+" comparar: "+comparar.toString());
+				if (inicio.equals(destino)) {
+					comparar = camino.clone();
+				} else {
+					AdyacenteEtiquetado adyacente = inicio.getAdyacente();
+					while (adyacente != null) {
+						if (visitados.get(adyacente.getVertice().getElemento().toString()) == null) {
+							comparar = this.caminoConTopeDeVerticesAux(adyacente.getVertice(), destino, vertices, visitados, camino,
+									comparar);
+						}
+						adyacente = adyacente.getSiguienteAdy();
+					}
+				}
+			}
+			visitados.remove(inicio.getElemento().toString());
+			camino.eliminar(camino.localizar(inicio.getElemento()));
+		}
+		System.out.println(comparar.toString());
+		return comparar;
 	}
 
 	public Lista listarProfundidad() {
@@ -468,35 +616,27 @@ public class GrafoEtiquetado {
 
 	private Lista caminoMasCortoAux(VerticeEtiquetado inicio, VerticeEtiquetado destino,
 			HashMap<String, Object> visitados, Lista camino, Lista comparar) {
-		Lista retorno = comparar;
 		if (inicio != null) {
 			visitados.put(inicio.getElemento().toString(), inicio);
 			camino.insertar(inicio.getElemento(), camino.longitud() + 1);
-
-			if (comparar.esVacia() || camino.longitud() <= comparar.longitud()) {
+			if (comparar.esVacia() || camino.longitud() < comparar.longitud()) {
 				if (inicio.equals(destino)) {
-					retorno = camino.clone();
+					comparar = camino.clone();
 				} else {
 					AdyacenteEtiquetado adyacente = inicio.getAdyacente();
 					while (adyacente != null) {
 						if (visitados.get(adyacente.getVertice().getElemento().toString()) == null) {
-							if (comparar.esVacia()) {
-								comparar = this.caminoMasCortoAux(adyacente.getVertice(), destino, visitados, camino,
-										comparar);
-							} else {
-								comparar = this.caminoMasCortoAux(adyacente.getVertice(), destino, visitados, camino,
-										comparar);
-							}
+							comparar = this.caminoMasCortoAux(adyacente.getVertice(), destino, visitados, camino,
+									comparar);
 						}
 						adyacente = adyacente.getSiguienteAdy();
 					}
-					retorno = comparar;
 				}
 			}
 			visitados.remove(inicio.getElemento().toString());
 			camino.eliminar(camino.localizar(inicio.getElemento()));
 		}
-		return retorno;
+		return comparar;
 	}
 
 	private Lista caminoMasLargoAux(VerticeEtiquetado inicio, VerticeEtiquetado destino,

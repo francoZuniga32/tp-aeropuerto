@@ -262,9 +262,6 @@ public class AVL {
         boolean complatado = false;
         //obtenemos los candidatos
         NodoAVL candidatoA = candidatoA(nodo.getIzquierdo());
-        NodoAVL candidatoB = candidatoB(nodo.getDerecho());
-        //evaluamos cual tiene menos hijos
-        int hijosCandidatoA = condicion(candidatoA);
         //obtenemos el valor de este nodo y eliminamos por ese lado
         nodo.setElemento(candidatoA.getElemento());
         //eliminamos el elemento de candidato a por I

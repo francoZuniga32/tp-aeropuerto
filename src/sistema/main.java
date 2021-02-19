@@ -875,8 +875,8 @@ static TecladoIn teclado = new TecladoIn();
 		Aeropuerto aeropuertoB = obtenerAeropuerto(aeropuertos);
 		escribir("inrese un numero maximo de escalas");
 		int maximoEscalas = leerInt();
-		Lista minimoCamino = aeropuertos.caminoMasCorto(aeropuertoA, aeropuertoB);
-		if(!minimoCamino.esVacia() && minimoCamino.longitud() <= maximoEscalas) {
+		Lista minimoCamino = aeropuertos.caminoConTopeDeVertices(aeropuertoA, aeropuertoB, maximoEscalas);
+		if(!minimoCamino.esVacia()) {
 			escribir("existe un minimo de escalas para dichos aeropuertos y es:"+ minimoCamino.toString());
 		}else {
 			escribir("no existe un minimo de esclas para dichos aeropuertos");
@@ -889,41 +889,6 @@ static TecladoIn teclado = new TecladoIn();
 		Lista camino = aeropuertos.caminoConMenosPeso(aeropuertoA, aeropuertoB);
 		
 		escribir("El viaje y sus escalas mas rapidas para la ruta ingresada es:"+camino.toString());
-	}
-	
-	public static double tiempoCamino(Lista camino, GrafoEtiquetado aeropuertos) {
-		int i = 1;
-		double retorno = 0;
-		if(camino.longitud() > 1) {
-			while(i < camino.longitud()) {
-				retorno += (double) aeropuertos.getEtiquetaArco(camino.recuperar(i), camino.recuperar(i+1));
-				i++;
-			}
-		}
-		return retorno;
-	}
-	
-	public static Lista minimoCamino(Lista caminos, GrafoEtiquetado aeropuertos) {
-		Lista caminoMinimo = new Lista();
-		if(!caminos.esVacia()) {
-			int i = 1;
-			double minimo = 0;
-			while(i <= caminos.longitud()) {
-				Lista camino = (Lista) caminos.recuperar(i);
-				if(i==1) {
-					minimo = tiempoCamino(camino, aeropuertos);
-					caminoMinimo = camino;
-				}else {
-					double minimoAtual = tiempoCamino(camino, aeropuertos);
-					if(minimoAtual < minimo) {
-						caminoMinimo = camino;
-						minimo = minimoAtual;
-					}
-				}
-				i++;
-			}
-		}
-		return caminoMinimo;
 	}
 	
 	public static void minimoEscalas(GrafoEtiquetado aeropuertos) {
@@ -946,20 +911,9 @@ static TecladoIn teclado = new TecladoIn();
 		escribir("Ingrese el aerpuerto de escala:");
 		Aeropuerto aeropuertoC = obtenerAeropuerto(aeropuertos);
 		
-		Lista caminos = aeropuertos.caminos(aeropuertoA, aeropuertoB);
-		Lista caminosConC = new Lista();
-		int i = 1;
-		while(i <= caminos.longitud()) {
-			Lista camino = (Lista) caminos.recuperar(i);
-			if(camino.localizar(aeropuertoC) != -1) {
-				caminosConC.insertar(camino, 1);
-			}
-			i++;
-		}
-		i = 1;
-		double max = 0;
-		Lista minimoCamino = minimoCamino(caminosConC, aeropuertos);
-		escribir("El minimo camino con la escala seleccionada es:"+minimoCamino);
+		Lista camino = aeropuertos.caminoMasRapidoQuePasa(aeropuertoA, aeropuertoB, aeropuertoC);
+		
+		escribir("El minimo camino con la escala seleccionada es:"+camino.toString());
 	}
 	
 	//promociones
