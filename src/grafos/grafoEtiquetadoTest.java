@@ -45,7 +45,8 @@ public class grafoEtiquetadoTest {
 		System.out.println("clone: "+G1.clone().toString());
 		System.out.println("Lista de caminos: "+G1.caminos('A', 'E').toString());
 		System.out.println("Obtenemos la etiqueta del arco A A:\t");
-		System.out.println(G1.getEtiquetaArco('A', 'A'));
+		System.out.println(G1.eliminarVertice('B'));
+		System.out.println(G1.toString());
 		Lista lista = new Lista();
 		System.out.println(lista.longitud());
 	}

@@ -41,25 +41,31 @@ public class GrafoEtiquetado {
 	public boolean eliminarVertice(Object elemento) {
 		boolean retorno = false;
 		VerticeEtiquetado nodo = this.inicio;
-		if (nodo.getElemento().equals(elemento)) {
+		if(nodo.getElemento().equals(elemento)) {
+			retorno = this.eliminarDeAdyacentes(nodo, nodo);
 			this.inicio = nodo.getSigVertice();
-		} else {
-			VerticeEtiquetado sigNodo = nodo.getSigVertice();
-			boolean control = true;
-			while (sigNodo != null && control) {
-				if (sigNodo.getElemento().equals(elemento)) {
-					control = false;
-				} else {
-					sigNodo = sigNodo.getSigVertice();
-					nodo = nodo.getSigVertice();
-				}
+		}else {
+			VerticeEtiquetado sigVertice = nodo.getSigVertice();
+			while(sigVertice != null && !sigVertice.getElemento().equals(elemento)) {
+				sigVertice = sigVertice.getSigVertice();
+				nodo = nodo.getSigVertice();
 			}
-			if (!control) {
-				nodo.setSigVertice(sigNodo.getSigVertice());
-				retorno = true;
+			if(sigVertice != null) {
+				retorno = this.eliminarDeAdyacentes(sigVertice, sigVertice);
+				nodo.setSigVertice(sigVertice.getSigVertice());
 			}
 		}
 
+		return retorno;
+	}
+	
+	private boolean eliminarDeAdyacentes(VerticeEtiquetado vertice, VerticeEtiquetado elemento) {
+		boolean retorno = false;
+		AdyacenteEtiquetado adyacente = vertice.getAdyacente();
+		while(adyacente != null) {
+			retorno = this.eliminarAdyacente(adyacente.getVertice(), elemento);
+			adyacente = adyacente.getSiguienteAdy();
+		}
 		return retorno;
 	}
 
@@ -592,6 +598,7 @@ public class GrafoEtiquetado {
 		if (inicio != null) {
 			visitados.put(inicio.getElemento().toString(), inicio);
 			camino.insertar(inicio.getElemento(), camino.longitud() + 1);
+			System.out.println("inicio"+inicio.getElemento().toString()+", camino: "+camino.toString()+" destino: "+destino.getElemento().toString()+" incluido: "+incluido.getElemento().toString());
 			if (inicio.equals(destino)) {
 				if (pesoComparar == 0 || peso < pesoComparar && camino.localizar(incluido.getElemento()) != -1 ) {
 					retorno.insertar(camino.clone(), 1);
@@ -605,12 +612,13 @@ public class GrafoEtiquetado {
 						double pesoAdyacente = peso + adyacente.getEtiqueta();
 						if (pesoComparar == 0 || pesoAdyacente < pesoComparar)
 							
-							if(retorno.esVacia()) retorno = this.caminoMasRapidoQuePasaAux(adyacente.getVertice(), incluido, destino, visitados, camino, retorno, pesoAdyacente, pesoComparar);
+							if(retorno.esVacia()) retorno = this.caminoMasRapidoQuePasaAux(adyacente.getVertice(), destino, incluido, visitados, camino, retorno, pesoAdyacente, pesoComparar);
 							else retorno = this.caminoMasRapidoQuePasaAux(adyacente.getVertice(), destino, incluido, visitados, camino, retorno, pesoAdyacente, (double) retorno.recuperar(2));
 					}
 					adyacente = adyacente.getSiguienteAdy();
 				}
 			}
+			System.out.println(retorno);
 			visitados.remove(inicio.getElemento().toString());
 			camino.eliminar(camino.localizar(inicio.getElemento()));
 		}
@@ -728,7 +736,7 @@ public class GrafoEtiquetado {
 		return retorno;
 	}
 
-	private boolean eliminarAdyacente(VerticeEtiquetado nodo, Object elemento) {
+	private boolean eliminarAdyacente(VerticeEtiquetado nodo, VerticeEtiquetado elemento) {
 		boolean retorno = false;
 		if (nodo != null) {
 			AdyacenteEtiquetado adyacente = nodo.getAdyacente();
@@ -737,7 +745,7 @@ public class GrafoEtiquetado {
 				retorno = true;
 			} else {
 				AdyacenteEtiquetado siguienteAdyacente = adyacente.getSiguienteAdy();
-				while (!siguienteAdyacente.getVertice().equals(elemento)) {
+				while (siguienteAdyacente != null && !siguienteAdyacente.getVertice().equals(elemento)) {
 					siguienteAdyacente = siguienteAdyacente.getSiguienteAdy();
 					adyacente = adyacente.getSiguienteAdy();
 				}
