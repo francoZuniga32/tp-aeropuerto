@@ -11,6 +11,11 @@ public class GrafoEtiquetado {
 		this.inicio = null;
 	}
 
+	/**
+	 * Si el nodo inicial es null entonces creamos un vertice.
+	 * en caso de no serlo nos movemos la ultimo vertice e insertamos.
+	 * esto es similar a la insercion de la lista.
+	 */
 	public boolean insertarVertice(Object element) {
 		boolean retorno = true;
 		VerticeEtiquetado nodo = this.inicio;
@@ -34,6 +39,8 @@ public class GrafoEtiquetado {
 
 	/**
 	 * eliminamos un vertice del grafo
+	 * 
+	 * tenemos que eliminar el vertice y tambien eliminarlo de sus adyacentes.
 	 * 
 	 * @param elemento
 	 * @return true si se elimino, false caso contrario
@@ -59,6 +66,12 @@ public class GrafoEtiquetado {
 		return retorno;
 	}
 	
+	/**
+	 * de cada vertice adyacente eliminamos el vertice que queremos eliminar pasandolo por parametro.
+	 * @param vertice
+	 * @param elemento
+	 * @return
+	 */
 	private boolean eliminarDeAdyacentes(VerticeEtiquetado vertice, VerticeEtiquetado elemento) {
 		boolean retorno = false;
 		AdyacenteEtiquetado adyacente = vertice.getAdyacente();
@@ -83,7 +96,15 @@ public class GrafoEtiquetado {
 
 		return retorno;
 	}
-
+	/**
+	 * Eliminamos de un arco entre dos verices
+	 * obs: tendriamos que evaluar tambien le rotulo ya que entre dos vertices pueden existir
+	 * mas de un arco por rotulos diferentes.
+	 * Reusamos el eliminar adyacente del aliminar vertice.
+	 * @param elemA
+	 * @param elemB
+	 * @return
+	 */
 	public boolean eliminarArco(Object elemA, Object elemB) {
 		boolean retorno = false;
 		HashMap<Object, VerticeEtiquetado> vertices = this.ubicarVertices(elemA, elemB);
@@ -735,7 +756,14 @@ public class GrafoEtiquetado {
 		}
 		return retorno;
 	}
-
+	/**
+	 * Eliminamos el vertice adyacente que concida con el vertice a eliminar.
+	 * Obs: podriamos eliminar por vertice y arco ya que pueden haver mas de un arco entre vertices
+	 * y estos pueden tener rotulos diferentes.
+	 * @param nodo
+	 * @param elemento
+	 * @return
+	 */
 	private boolean eliminarAdyacente(VerticeEtiquetado nodo, VerticeEtiquetado elemento) {
 		boolean retorno = false;
 		if (nodo != null) {
